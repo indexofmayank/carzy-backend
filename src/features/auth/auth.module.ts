@@ -15,7 +15,7 @@ import { AlsStoreModule } from 'src/shared-modules/als-store/als-store.module';
     DealersModule,
     AlsStoreModule,
     JwtModule.register({
-      secret: 'AKIA2K7IVGYFYC7QZSXJ',
+      secret: 'mayank_tiwari',
       signOptions: { expiresIn: '1h' },
     }),
   ],
