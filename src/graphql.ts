@@ -149,11 +149,6 @@ export interface UpdateSellerDetailDto {
     dob: string;
 }
 
-export interface AuthenticateDto {
-    username: string;
-    password: string;
-}
-
 export interface DealerCreateDto {
     name: string;
     address: string;
@@ -354,27 +349,24 @@ export interface SellerDetail {
     deleted_at: DateTime;
 }
 
-export interface DealerHasEmployee {
-    first_name: string;
-    last_name: string;
-    status: string;
-    phone: number;
-    email: string;
-    dealer_id: string;
-    password: string;
-    deleted_at: DateTime;
-}
-
-export interface AuthOutputDto {
-    access_token: string;
-}
-
 export interface Dealer {
     name: string;
     address: string;
     status: string;
     email: string;
     phone: string;
+    deleted_at: DateTime;
+}
+
+export interface DealerHasEmployee {
+    _id: string;
+    first_name: string;
+    last_name: string;
+    status: string;
+    phone: number;
+    email: string;
+    dealer_id: Dealer;
+    password: string;
     deleted_at: DateTime;
 }
 
@@ -528,7 +520,6 @@ export interface IMutation {
     updateSeller(updateSellerDto: UpdateSellerDetailDto, sellerId: string): SellerDetail | Promise<SellerDetail>;
     deleteSeller(SellerID: string): SellerDetail[] | Promise<SellerDetail[]>;
     deleteManySeller(SellerID: string[]): SellerDetail[] | Promise<SellerDetail[]>;
-    login(authenticateDto: AuthenticateDto): AuthOutputDto | Promise<AuthOutputDto>;
     addDealer(createDealerDto: DealerCreateDto): Nullable<Dealer> | Promise<Nullable<Dealer>>;
     updateDealer(updateDealerId: DealerUpdateDto, dealerId: string): Nullable<Dealer> | Promise<Nullable<Dealer>>;
     deleteDealer(dealerId?: Nullable<string>): Nullable<Dealer> | Promise<Nullable<Dealer>>;

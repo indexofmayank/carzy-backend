@@ -1,5 +1,5 @@
 import { UserStore } from './user-store.entity';
 
-export class Store {
+export interface Store {
   userStore?: UserStore;
 }
