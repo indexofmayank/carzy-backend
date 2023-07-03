@@ -5,12 +5,12 @@ import { AuthOutputDto } from './auth.output';
 
 @Resolver(() => AuthenticateDto)
 export class AuthResolver {
-  constructor(public readonly authService: AuthService) {}
+  constructor(public readonly authService: AuthService) { }
 
-  @Mutation(() => AuthOutputDto)
-  async login(
-    @Args('authenticateDto') authenticateDto: AuthenticateDto,
-  ): Promise<string | any> {
-    return this.authService.authenticate(authenticateDto);
-  }
+  // @Mutation(() => AuthOutputDto)
+  // async login(
+  //   @Args('authenticateDto') authenticateDto: AuthenticateDto,
+  // ): Promise<string | any> {
+  //   return this.authService.authenticate(authenticateDto);
+  // }
 }

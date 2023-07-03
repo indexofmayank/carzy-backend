@@ -5,10 +5,13 @@ import { UpdateEmployeeInput } from '../dtos/inputs/update-employee.input';
 import { CreateEmployeeInput } from '../dtos/inputs/create-employee.input';
 import { Status } from 'src/status.enums';
 import * as bcrypt from 'bcrypt';
+import { AsyncLocalStorage } from 'async_hooks';
+import { Store } from 'src/shared-modules/als-store/store.entity';
+import { UserStoreHelper } from 'src/common/helpers/user-store.helper';
 
 @Injectable()
 export class EmployeeService {
-  constructor(private readonly employeeRepository: EmployeeRepository) { }
+  constructor(private readonly employeeRepository: EmployeeRepository, private readonly als: AsyncLocalStorage<Store>) { }
 
   async getEmployee(
     resPerPage: number,
@@ -24,7 +27,10 @@ export class EmployeeService {
   }
 
   async getEmployeeByEmail(email: string): Promise<DealerHasEmployee | null> {
-    const employee = await this.employeeRepository.findOne({ email });
+    const employee = await this.employeeRepository.entityModel.findOne({ email }).populate({
+      path: 'dealer_id',
+      match: { status: 'active' }
+    });
     return employee;
   }
 
@@ -37,7 +43,7 @@ export class EmployeeService {
       status: Status.ACTIVE,
       phone: createEmployeeInput.phone,
       email: createEmployeeInput.email,
-      dealer_id: 'ssss',
+      dealer_id: UserStoreHelper.getDealerId(this.als),
       password: await bcrypt.hash(createEmployeeInput.password, 10),
     };
     const employee = await this.employeeRepository.create(payload);

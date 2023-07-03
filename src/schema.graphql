@@ -82,27 +82,24 @@ type SellerDetail {
   deleted_at: DateTime!
 }
 
-type DealerHasEmployee {
-  first_name: String!
-  last_name: String!
-  status: String!
-  phone: Float!
-  email: String!
-  dealer_id: String!
-  password: String!
-  deleted_at: DateTime!
-}
-
-type AuthOutputDto {
-  access_token: String!
-}
-
 type Dealer {
   name: String!
   address: String!
   status: String!
   email: String!
   phone: String!
+  deleted_at: DateTime!
+}
+
+type DealerHasEmployee {
+  _id: String!
+  first_name: String!
+  last_name: String!
+  status: String!
+  phone: Float!
+  email: String!
+  dealer_id: Dealer!
+  password: String!
   deleted_at: DateTime!
 }
 
@@ -260,7 +257,6 @@ type Mutation {
   updateSeller(updateSellerDto: UpdateSellerDetailDto!, sellerId: ID!): SellerDetail!
   deleteSeller(SellerID: ID!): [SellerDetail!]!
   deleteManySeller(SellerID: [ID!]!): [SellerDetail!]!
-  login(authenticateDto: AuthenticateDto!): AuthOutputDto!
   addDealer(createDealerDto: DealerCreateDto!): Dealer
   updateDealer(updateDealerId: DealerUpdateDto!, dealerId: ID!): Dealer
   deleteDealer(dealerId: String): Dealer
@@ -423,11 +419,6 @@ input UpdateSellerDetailDto {
   email: String!
   alternative_email: String!
   dob: String!
-}
-
-input AuthenticateDto {
-  username: String!
-  password: String!
 }
 
 input DealerCreateDto {
