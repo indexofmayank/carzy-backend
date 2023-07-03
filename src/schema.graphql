@@ -1,0 +1,562 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Brand {
+  name: String
+  status: Status
+  deleted_at: DateTime
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type BodyType {
+  name: String
+  status: Status
+  deleted_at: DateTime
+  updated_at: DateTime
+  created_at: DateTime
+}
+
+type CarModel {
+  name: String!
+  body_type_id: ID!
+  brand_id: ID!
+  status: String!
+  created_by: String!
+  deleted_at: DateTime!
+}
+
+type Color {
+  name: String
+  status: Status
+  deleted_at: DateTime
+}
+
+type FuelType {
+  name: String!
+  status: String!
+  deleted_at: DateTime!
+}
+
+type MakeYear {
+  year: Float!
+  status: String!
+  deleted_at: DateTime!
+}
+
+type CarVariant {
+  name: String!
+  status: String!
+  model_id: ID!
+  deleted_at: DateTime!
+}
+
+type Garage {
+  name: String!
+  model_id: ID!
+  status: String!
+  deleted_at: DateTime!
+}
+
+type SellerDetail {
+  name: String!
+  address: String!
+  zip_code: String!
+  phone: Float!
+  alternative_no: Float!
+  email: String!
+  alternate_email: String!
+  dob: String!
+  deleted_at: DateTime!
+}
+
+type DealerHasEmployee {
+  first_name: String!
+  last_name: String!
+  status: String!
+  phone: Float!
+  email: String!
+  dealer_id: String!
+  password: String!
+  deleted_at: DateTime!
+}
+
+type AuthOutputDto {
+  access_token: String!
+}
+
+type Dealer {
+  name: String!
+  address: String!
+  status: String!
+  email: String!
+  phone: String!
+  deleted_at: DateTime!
+}
+
+type AddressOutputDto {
+  address1: String!
+  address2: String!
+  city_id: String!
+  state_id: String!
+  pin: Float!
+}
+
+type SpouseDetailOutputDto {
+  name: String!
+  contact: Float!
+  dob: String!
+  special_instruction: String!
+  picture: String!
+}
+
+type BuyerOutputDto {
+  name: String!
+  contact_no: Float!
+  address: AddressOutputDto!
+  referral: String!
+  email: String!
+  status: String!
+  dealer_id: String!
+  dob: String!
+  doa: String!
+  spouse_details: SpouseDetailOutputDto!
+}
+
+type CallType {
+  name: String!
+  status: String!
+  dealer_id: String!
+  deleted_at: DateTime!
+}
+
+type BuyerHasPurchaseDetail {
+  name: String!
+  contact_no: Float!
+  requirement: String!
+  car_number: String!
+  call_type_id: String!
+  lead_source_id: String!
+  lead_type_id: String!
+  referral: String!
+  status: String!
+}
+
+type TeleCallingEntry {
+  buyer_id: String!
+  visited_next_date: String!
+  next_visit_date: String!
+  finance_required: Boolean!
+  remarks: String!
+  next_call_date: String!
+  created_by: String!
+  specail_instruction: String!
+  deleted_at: DateTime!
+}
+
+type LeadSource {
+  name: String!
+  status: String!
+  dealer_id: String!
+}
+
+type LeadTypes {
+  name: String!
+  status: String!
+  dealer_id: String!
+  deleted_id: DateTime!
+}
+
+type Query {
+  index: String!
+  listBrand: [Brand!]
+  getBrandDetail(brandId: ID!): Brand
+  listBodyType: [BodyType!]
+  getBodyTypeDetail(bodyTypeId: ID!): BodyType
+  listCarModel: [CarModel!]
+  getCarModelDetail(carModelId: ID!): CarModel
+  listColors: [Color!]
+  getColorDetail(colorIdDto: ColorIdDto!): Color
+  listFuelType: [FuelType!]!
+  getFuelTypeDetail(fuelTypeId: ID!): FuelType
+  listYear: [MakeYear!]
+  getYeadDetail(yearId: String!): MakeYear!
+  listCarVariant: [CarVariant!]!
+  getCarVariantDetail(carVariantId: ID!): CarVariant!
+  listGarage: [Garage!]
+  getGarageDetail(garageById: ID!): Garage!
+  listSellerDetail: [SellerDetail!]
+  getSellerDetail(sellerId: String!): SellerDetail!
+  listDealer: Dealer
+  getDealerDetail(dealerId: ID!): [Dealer!]
+  listDealerHasEmployee: [DealerHasEmployee!]
+  getDealerHasEmployeeDetail(employeeId: ID!): DealerHasEmployee
+  getBuyerDetail(buyerId: ID!): BuyerOutputDto
+  listBuyer: [BuyerOutputDto!]
+  listCallType: [CallType!]
+  getCallTypeDetail(callTypeId: ID!): CallType
+  listPurchaseDetails: [BuyerHasPurchaseDetail!]
+  getPurchaseDetail(purchaseDetailId: ID!): BuyerHasPurchaseDetail
+  listTeleCallingEntry: [TeleCallingEntry!]
+  getTeleCallingEntryDetail(teleCallingId: ID!): TeleCallingEntry
+  listLeadSource: [LeadSource!]
+  getLeadSourceDetail(leadSourceObjectId: ID!): LeadSource
+  listLeadType: [LeadTypes!]
+  getLeadTypeDetail(leadTypeId: ID!): LeadTypes
+}
+
+input ColorIdDto {
+  colorId: [String!]!
+}
+
+type Mutation {
+  addBrand(addBrandDto: CreateBrandDto!): Brand!
+  updateBrand(updateBrandDto: UpdateBrandDto!, brandId: ID!): Brand!
+  deleteBrand(brandId: ID!): Brand!
+  deleteManyBrands(brandIds: [ID!]!): Brand!
+  addBodyType(addBodyTypeDto: CreateBodyTypeDto!): BodyType!
+  deleteBodyType(deleteBodyTypeDto: DeleteBodyTypeDto!): BodyType!
+  deleteManyBodyTypes(deleteManyBodyTypeDto: DeleteBodyTypeDto!): BodyType!
+  updateBodyType(updateBodyTypeDto: UpdateBodyTypeDto!, bodyTypeId: ID!): BodyType!
+  updateBodyTypeStatus(updateBodyTypeStatusDto: UpdateBodyTypeStatusDto!): BodyType!
+  addCarModel(addCarModelDto: CreateCarModelDto!): CarModel!
+  updateCarModel(updateCarModelDto: UpdateCarModelDto!, carModelId: ID!): CarModel!
+  deleteCarModel(carModelId: ID!): CarModel!
+  deleteManyCarModel(carModelIds: [ID!]!): CarModel!
+  addColor(addColorDto: CreateColorDto!): Color
+  deleteColor(colorIdDto: ColorIdDto!): Color
+  deleteManyColor(colorIdDto: ColorIdDto!): [Color!]!
+  updateColor(updateColorDto: UpdateColorDto!): Color!
+  updateColorStatus(updateColorStatusDto: UpdateColorStatusDto!): Color!
+  addFuelType(addFuelTypeDto: CreateFuelTypeDto!): FuelType!
+  deleteFuelType(fuelTypeId: ID!): FuelType!
+  deleteManyFuelTypes(fuelTypeIds: [ID!]!): FuelType!
+  updateFuelType(UpdateFuelTypeDto: UpdateFuelTypeDto!, fuelTypeId: ID!): FuelType!
+  addYear(addYearDto: CreateMakeYearDto!): MakeYear!
+  updateYear(updateYearDto: UpdateMakeYearDto!, yearId: ID!): MakeYear
+  deleteYear(YearId: ID!): [MakeYear!]!
+  deleteManyYears(yearIds: [ID!]!): [MakeYear!]!
+  addCarVariant(addCarVariantDto: CreateCarVariantDto!): CarVariant!
+  updateCarVariant(updateCarVariantDto: UpdateCarVariantDto!, carVariantId: ID!): CarVariant!
+  deleteCarVariant(carVariantId: ID!): CarVariant!
+  deleteManyCarVariant(carVariantIds: [ID!]!): CarVariant!
+  addGarage(addGarageDto: CreateGarageDto!): Garage
+  updateGarage(updateGarageDto: UpdateGarageDto!, garageId: ID!): Garage!
+  deleteGarage(garageId: ID!): Garage!
+  deleteManyGarage(garageIds: [ID!]!): Garage!
+  addSeller(addSellerDto: CreateSellerDetailDto!): SellerDetail!
+  updateSeller(updateSellerDto: UpdateSellerDetailDto!, sellerId: ID!): SellerDetail!
+  deleteSeller(SellerID: ID!): [SellerDetail!]!
+  deleteManySeller(SellerID: [ID!]!): [SellerDetail!]!
+  login(authenticateDto: AuthenticateDto!): AuthOutputDto!
+  addDealer(createDealerDto: DealerCreateDto!): Dealer
+  updateDealer(updateDealerId: DealerUpdateDto!, dealerId: ID!): Dealer
+  deleteDealer(dealerId: String): Dealer
+  deleteManyDealer(dealerIds: [ID!]!): Dealer
+  addDealerHasEmployee(addDealerHasEmployeeDto: CreateEmployeeInput!): DealerHasEmployee
+  updateDealerHasEmployee(employeeId: ID!, updateDealerHasEmployeeDto: UpdateEmployeeInput!): DealerHasEmployee
+  deleteDealerHasEmployee(employeeId: String): DealerHasEmployee
+  deleteManyDealerHasEmployee(employeeIds: [ID!]!): DealerHasEmployee
+  addBuyer(addBuyerDto: BuyerInputDto!): BuyerOutputDto
+  updateBuyer(buyerId: ID!, updateBuyerDto: BuyerInputDto!): BuyerOutputDto!
+  deleteBuyer(buyerId: ID!): BuyerOutputDto!
+  deleteManyBuyers(buyerIds: [ID!]!): BuyerOutputDto!
+  addCallType(createCallTypeDto: CallTypeCreateDto!): CallType
+  updateCallType(updateCallTypeDto: CallTypeCreateDto!, updateCallTypeId: ID!): CallType
+  deleteCallType(callTypeId: ID!): CallType
+  addPurchaseDetail(addPurchaseDetailDto: BuyerHasPurchaseDetailCreate!): BuyerHasPurchaseDetail!
+  updatePurchaseDetail(updatePruchaseDetailDto: BuyerHasPurchaseDetailUpdate!, purchaseDetailId: String!): BuyerHasPurchaseDetail!
+  deletePurchaseDetail(purchaseDetailId: ID!): BuyerHasPurchaseDetail!
+  deleteManyPurchaseDetail(purchaseDetailIds: [ID!]!): BuyerHasPurchaseDetail!
+  addTeleCallingEntry(addTeleCallingDto: TeleCallingEntryCreate!): TeleCallingEntry
+  updateTeleCallingEntry(updateTeleCallingDto: TeleCallingEntryUpdate!, teleCallingId: String!): TeleCallingEntry
+  deleteTeleCalling(teleCalledId: ID!): TeleCallingEntry
+  deleteManyTeleCalling(teleCallingIds: ID!): TeleCallingEntry
+  addLeadSource(addLeadSourceDto: LeadSoucreUpdateDto!): LeadSource
+  updateLeadSource(updateLeadSourceDto: LeadSoucreUpdateDto!, leadSourceObjectId: ID!): LeadSource
+  deleteLeadSource(leadSourceObectId: ID!): LeadSource
+  deleteManyLeadSource(leadSourceObjectIds: [ID!]!): [LeadSource!]
+  addLeadTypes(createLeadTypeDto: LeadTypeCreateDto!): LeadTypes
+  updateLeadTypes(leadTypeId: ID!, updateLeadTypeDto: LeadTypeUpdateDto!): LeadTypes
+  deleteLeadTypes(leadTypeId: ID!): LeadTypes
+  deleteManyLeadTypes(leadTypesIds: [ID!]!): LeadTypes
+}
+
+input CreateBrandDto {
+  name: String
+  status: Status
+  deleted_at: DateTime
+}
+
+input UpdateBrandDto {
+  name: String
+  status: Status
+  deleted_at: DateTime
+}
+
+input CreateBodyTypeDto {
+  name: String!
+  status: Status
+  deleted_at: DateTime
+}
+
+input DeleteBodyTypeDto {
+  bodyTypeId: [String!]!
+}
+
+input UpdateBodyTypeDto {
+  name: String!
+  status: Status
+  deleted_at: DateTime
+}
+
+input UpdateBodyTypeStatusDto {
+  status: Status!
+  bodyTypeId: ID!
+}
+
+input CreateCarModelDto {
+  name: String!
+  status: String!
+  created_by: String!
+  body_type_id: ID!
+  brand_id: ID!
+}
+
+input UpdateCarModelDto {
+  name: String!
+  status: String!
+  created_by: String!
+  body_type_id: ID!
+  brand_id: ID!
+}
+
+input CreateColorDto {
+  name: String!
+  status: Status
+}
+
+input UpdateColorDto {
+  name: String!
+  status: Status
+  colorId: [String!]!
+}
+
+input UpdateColorStatusDto {
+  status: Status!
+  colorId: [String!]!
+}
+
+input CreateFuelTypeDto {
+  name: String!
+  status: String!
+}
+
+input UpdateFuelTypeDto {
+  name: String!
+  status: String!
+}
+
+input CreateMakeYearDto {
+  year: Float!
+  status: String!
+}
+
+input UpdateMakeYearDto {
+  year: Float!
+  status: String!
+}
+
+input CreateCarVariantDto {
+  name: String!
+  status: String!
+  model_id: ID!
+}
+
+input UpdateCarVariantDto {
+  name: String!
+  status: String!
+  model_id: ID!
+}
+
+input CreateGarageDto {
+  name: String!
+  model_id: String!
+  status: String!
+}
+
+input UpdateGarageDto {
+  name: String!
+  model_id: String!
+  status: String!
+}
+
+input CreateSellerDetailDto {
+  name: String!
+  address: String!
+  zip_code: String!
+  phone: Float!
+  alternative_no: Float!
+  email: String!
+  alternate_email: String!
+  dob: String!
+}
+
+input UpdateSellerDetailDto {
+  name: String!
+  address: String!
+  zip_code: String!
+  phone: Float!
+  alternative_no: Float!
+  email: String!
+  alternative_email: String!
+  dob: String!
+}
+
+input AuthenticateDto {
+  username: String!
+  password: String!
+}
+
+input DealerCreateDto {
+  name: String!
+  address: String!
+  status: String!
+  email: String!
+  phone: String!
+}
+
+input DealerUpdateDto {
+  name: String!
+  address: String!
+  status: String!
+  email: String!
+  phone: String!
+}
+
+input CreateEmployeeInput {
+  first_name: String!
+  last_name: String!
+  phone: String!
+  email: String!
+  password: String!
+  confirm_password: String!
+}
+
+input UpdateEmployeeInput {
+  first_name: String!
+  last_name: String!
+  phone: String!
+  id: String!
+}
+
+input BuyerInputDto {
+  name: String!
+  contact_no: Float!
+  address: AddressInputDto!
+  referral: String!
+  email: String!
+  status: String!
+  dealer_id: String!
+  dob: String!
+  doa: String!
+  spouse_details: SpouseDetailInputDto!
+}
+
+input AddressInputDto {
+  address1: String!
+  address2: String!
+  city_id: String!
+  state_id: String!
+  pin: Float!
+}
+
+input SpouseDetailInputDto {
+  name: String!
+  contact: Float!
+  dob: String!
+  special_instruction: String!
+  picture: String!
+}
+
+input CallTypeCreateDto {
+  name: String!
+  status: String!
+  dealer_id: String!
+}
+
+input BuyerHasPurchaseDetailCreate {
+  name: String!
+  contact_no: Float!
+  requirement: String!
+  car_number: String!
+  call_type_id: String!
+  lead_source_id: String!
+  lead_type_id: String!
+  referral: String!
+  status: String!
+}
+
+input BuyerHasPurchaseDetailUpdate {
+  name: String!
+  contact_no: Float!
+  requirement: String!
+  car_number: String!
+  call_type_id: String!
+  lead_source_id: String!
+  lead_type_id: String!
+  referral: String!
+  status: String!
+}
+
+input TeleCallingEntryCreate {
+  buyer_id: String!
+  visited_next_date: String!
+  next_visit_date: String!
+  finance_required: Boolean!
+  remarks: String!
+  next_call_date: String!
+  created_by: String!
+  specail_instruction: String!
+}
+
+input TeleCallingEntryUpdate {
+  buyer_id: String!
+  visited_next_date: DateTime!
+  next_visit_date: DateTime!
+  finance_required: Boolean!
+  remarks: String!
+  next_call_date: DateTime!
+  created_by: String!
+  specail_instruction: String!
+}
+
+input LeadSoucreUpdateDto {
+  name: String!
+  status: String!
+  dealer_id: String!
+}
+
+input LeadTypeCreateDto {
+  name: String!
+  status: String!
+  dealer_id: String!
+}
+
+input LeadTypeUpdateDto {
+  name: String!
+  status: String!
+  dealer_id: String!
+}
