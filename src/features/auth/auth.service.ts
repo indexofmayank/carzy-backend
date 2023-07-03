@@ -24,7 +24,7 @@ export class AuthService {
       );
       if (isPasswordValid) {
         const tokenPayload = {
-          custom_claims: { first_name: employee.first_name },
+          custom_claims: { first_name: employee.first_name, username: employee.email, id: employee['_id'].toString() },
         };
         const token = this.jwtService.sign(tokenPayload);
         authData.token = token;

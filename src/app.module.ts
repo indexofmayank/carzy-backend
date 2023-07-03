@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -37,6 +37,7 @@ import { DealersModule } from './features/dealers/dealers.module';
 import jwtConfig from './config/jwt.config';
 import { JwtStrategy } from './features/auth/strategies/jwt.strategy';
 import { LocalStrategy } from './features/auth/strategies/local.strategy';
+import { AlsStoreMiddleware } from './shared-modules/als-store/als-store.middleware';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -84,4 +85,10 @@ import { LocalStrategy } from './features/auth/strategies/local.strategy';
   controllers: [AppController, AuthController],
   providers: [AppService, AppResolver, AuthService, JwtStrategy, LocalStrategy],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AlsStoreMiddleware).forRoutes('/graphql');
+  }
+
+}

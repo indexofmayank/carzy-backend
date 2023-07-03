@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   validate(userData: any) {
     const validatedData = this.employeeService.getEmployeeByEmail(
-      userData.userData.username,
+      userData.custom_claims.username,
     );
     this.saveToStore(validatedData);
     return validatedData;
