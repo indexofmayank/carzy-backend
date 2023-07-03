@@ -42,7 +42,7 @@ import { LocalStrategy } from './features/auth/strategies/local.strategy';
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      // envFilePath: ['config/.env.common', '.env'],
+      envFilePath: ['config/.env.common', '.env'],
       load: [appConfig, databaseConfig, emailConfig, awsConfig, jwtConfig],
       expandVariables: true,
     }),

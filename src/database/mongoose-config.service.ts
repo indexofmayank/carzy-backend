@@ -16,6 +16,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
     const dbPassword = this.configService.get<string>('database.password');
     const dbUrl = this.configService.get<string>('database.uri');
     const uri = `mongodb+srv://${dbUserName}:${dbPassword}@${dbUrl}/?retryWrites=true&w=majority`;
+    console.log(dbUrl)
     console.log(uri);
 
     return {
