@@ -14,8 +14,40 @@ export enum Status {
     DELETED = "DELETED"
 }
 
+export interface BrandIdDto {
+    brandId: string;
+}
+
+export interface BodyTypeIdDto {
+    bodyTypeId: string[];
+}
+
 export interface ColorIdDto {
     colorId: string[];
+}
+
+export interface FuelTypeIdDto {
+    fuelTypeId: string[];
+}
+
+export interface MakeYearIdDto {
+    makeYearId: string[];
+}
+
+export interface CarVariantIdDto {
+    carVariantId: string[];
+}
+
+export interface GarageIdDto {
+    garageId: string[];
+}
+
+export interface LeadSourceIdDto {
+    leadSourceId: string[];
+}
+
+export interface LeadTypeIdDto {
+    leadTypeId: string[];
 }
 
 export interface CreateBrandDto {
@@ -28,6 +60,12 @@ export interface UpdateBrandDto {
     name?: Nullable<string>;
     status?: Nullable<Status>;
     deleted_at?: Nullable<DateTime>;
+    brandId?: Nullable<string[]>;
+}
+
+export interface UpdateBrandStatusDto {
+    status: Status;
+    brandId: string[];
 }
 
 export interface CreateBodyTypeDto {
@@ -36,14 +74,11 @@ export interface CreateBodyTypeDto {
     deleted_at?: Nullable<DateTime>;
 }
 
-export interface DeleteBodyTypeDto {
-    bodyTypeId: string[];
-}
-
 export interface UpdateBodyTypeDto {
     name: string;
     status?: Nullable<Status>;
     deleted_at?: Nullable<DateTime>;
+    bodyTypeId: string;
 }
 
 export interface UpdateBodyTypeStatusDto {
@@ -52,28 +87,36 @@ export interface UpdateBodyTypeStatusDto {
 }
 
 export interface CreateCarModelDto {
-    name: string;
-    status: string;
-    created_by: string;
-    body_type_id: string;
-    brand_id: string;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
+    body_type_id?: Nullable<string>;
+    brand_id?: Nullable<string>;
 }
 
 export interface UpdateCarModelDto {
-    name: string;
-    status: string;
-    created_by: string;
-    body_type_id: string;
-    brand_id: string;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
+    body_type_id?: Nullable<string>;
+    brand_id?: Nullable<string>;
+    carModelId: string;
+}
+
+export interface UpdateCarModelStatusDto {
+    status: Status;
+    carModelId: string[];
+}
+
+export interface CarModelIdDto {
+    carModelId: string[];
 }
 
 export interface CreateColorDto {
-    name: string;
+    name?: Nullable<string>;
     status?: Nullable<Status>;
 }
 
 export interface UpdateColorDto {
-    name: string;
+    name?: Nullable<string>;
     status?: Nullable<Status>;
     colorId: string[];
 }
@@ -84,47 +127,71 @@ export interface UpdateColorStatusDto {
 }
 
 export interface CreateFuelTypeDto {
-    name: string;
-    status: string;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
 }
 
 export interface UpdateFuelTypeDto {
-    name: string;
-    status: string;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
+    fuelTypeId: string[];
+}
+
+export interface UpdateFuelTypeStatusDto {
+    status: Status;
+    fuelTypeId: string[];
 }
 
 export interface CreateMakeYearDto {
     year: number;
-    status: string;
+    status?: Nullable<string>;
+}
+
+export interface UpdateMakeyearStatusDto {
+    status: Status;
+    makeYearId: string[];
 }
 
 export interface UpdateMakeYearDto {
     year: number;
-    status: string;
+    status?: Nullable<string>;
+    makeYearId: string[];
 }
 
 export interface CreateCarVariantDto {
-    name: string;
-    status: string;
-    model_id: string;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
+    model_id?: Nullable<string>;
 }
 
 export interface UpdateCarVariantDto {
-    name: string;
-    status: string;
-    model_id: string;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
+    model_id?: Nullable<string>;
+    carVariantId: string;
+}
+
+export interface UpdateCarVariantStatusDto {
+    status: Status;
+    carVariantId: string[];
 }
 
 export interface CreateGarageDto {
     name: string;
-    model_id: string;
-    status: string;
+    model_id: string[];
+    status?: Nullable<Status>;
 }
 
 export interface UpdateGarageDto {
     name: string;
-    model_id: string;
-    status: string;
+    model_id: string[];
+    status?: Nullable<Status>;
+    garageId: string[];
+}
+
+export interface UpdateGarageStatusDto {
+    status: Status;
+    garageId: string[];
 }
 
 export interface CreateSellerDetailDto {
@@ -267,47 +334,60 @@ export interface TeleCallingEntryUpdate {
     specail_instruction: string;
 }
 
-export interface LeadSoucreUpdateDto {
+export interface CreateLeadSourceDto {
     name: string;
-    status: string;
-    dealer_id: string;
+    status?: Nullable<Status>;
+    dealer_id?: Nullable<string[]>;
 }
 
-export interface LeadTypeCreateDto {
+export interface UpdateLeadSourceDto {
     name: string;
-    status: string;
-    dealer_id: string;
+    status?: Nullable<Status>;
+    dealer_id?: Nullable<string[]>;
+    leadSourceId: string[];
 }
 
-export interface LeadTypeUpdateDto {
+export interface UpdateLeadSourceStatusDto {
+    status: Status;
+    leadSourceId: string[];
+}
+
+export interface CreateLeadTypeDto {
     name: string;
-    status: string;
-    dealer_id: string;
+    status?: Nullable<Status>;
+    dealer_id?: Nullable<string>;
+}
+
+export interface UpdateLeadTypeDto {
+    name: string;
+    status?: Nullable<Status>;
+    dealer_id?: Nullable<string>;
+    leadTypeId: string[];
+}
+
+export interface UpdateLeadTypeStatusDto {
+    leadTypeId: string[];
+    status: Status;
 }
 
 export interface Brand {
     name?: Nullable<string>;
     status?: Nullable<Status>;
     deleted_at?: Nullable<DateTime>;
-    created_at?: Nullable<DateTime>;
-    updated_at?: Nullable<DateTime>;
 }
 
 export interface BodyType {
     name?: Nullable<string>;
     status?: Nullable<Status>;
     deleted_at?: Nullable<DateTime>;
-    updated_at?: Nullable<DateTime>;
-    created_at?: Nullable<DateTime>;
 }
 
 export interface CarModel {
-    name: string;
-    body_type_id: string;
-    brand_id: string;
-    status: string;
-    created_by: string;
-    deleted_at: DateTime;
+    name?: Nullable<string>;
+    body_type_id?: Nullable<string>;
+    brand_id?: Nullable<string>;
+    status?: Nullable<Status>;
+    deleted_at?: Nullable<DateTime>;
 }
 
 export interface Color {
@@ -318,28 +398,28 @@ export interface Color {
 
 export interface FuelType {
     name: string;
-    status: string;
-    deleted_at: DateTime;
+    status?: Nullable<Status>;
+    deleted_at?: Nullable<DateTime>;
 }
 
 export interface MakeYear {
     year: number;
-    status: string;
-    deleted_at: DateTime;
+    status?: Nullable<Status>;
+    deleted_at?: Nullable<DateTime>;
 }
 
 export interface CarVariant {
-    name: string;
-    status: string;
-    model_id: string;
-    deleted_at: DateTime;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
+    model_id?: Nullable<string>;
+    deleted_at?: Nullable<DateTime>;
 }
 
 export interface Garage {
     name: string;
-    model_id: string;
-    status: string;
-    deleted_at: DateTime;
+    model_id?: Nullable<string>;
+    status?: Nullable<Status>;
+    deleted_at?: Nullable<DateTime>;
 }
 
 export interface SellerDetail {
@@ -439,36 +519,36 @@ export interface TeleCallingEntry {
 }
 
 export interface LeadSource {
-    name: string;
-    status: string;
-    dealer_id: string;
+    name?: Nullable<string>;
+    status?: Nullable<Status>;
+    dealer_id?: Nullable<string>;
 }
 
 export interface LeadTypes {
     name: string;
-    status: string;
-    dealer_id: string;
-    deleted_id: DateTime;
+    status?: Nullable<Status>;
+    dealer_id?: Nullable<string>;
+    deleted_at?: Nullable<DateTime>;
 }
 
 export interface IQuery {
     index(): string | Promise<string>;
     listBrand(): Nullable<Brand[]> | Promise<Nullable<Brand[]>>;
-    getBrandDetail(brandId: string): Nullable<Brand> | Promise<Nullable<Brand>>;
+    getBrandDetail(brandIdDto: BrandIdDto): Nullable<Brand> | Promise<Nullable<Brand>>;
     listBodyType(): Nullable<BodyType[]> | Promise<Nullable<BodyType[]>>;
-    getBodyTypeDetail(bodyTypeId: string): Nullable<BodyType> | Promise<Nullable<BodyType>>;
+    getBodyTypeDetail(bodyTypeIdDto: BodyTypeIdDto): Nullable<BodyType> | Promise<Nullable<BodyType>>;
     listCarModel(): Nullable<CarModel[]> | Promise<Nullable<CarModel[]>>;
     getCarModelDetail(carModelId: string): Nullable<CarModel> | Promise<Nullable<CarModel>>;
     listColors(): Nullable<Color[]> | Promise<Nullable<Color[]>>;
     getColorDetail(colorIdDto: ColorIdDto): Nullable<Color> | Promise<Nullable<Color>>;
     listFuelType(): FuelType[] | Promise<FuelType[]>;
-    getFuelTypeDetail(fuelTypeId: string): Nullable<FuelType> | Promise<Nullable<FuelType>>;
+    getFuelTypeDetail(fuelTypeIdDto: FuelTypeIdDto): Nullable<FuelType> | Promise<Nullable<FuelType>>;
     listYear(): Nullable<MakeYear[]> | Promise<Nullable<MakeYear[]>>;
-    getYeadDetail(yearId: string): MakeYear | Promise<MakeYear>;
+    getYeadDetail(makeYearIdDto: MakeYearIdDto): MakeYear | Promise<MakeYear>;
     listCarVariant(): CarVariant[] | Promise<CarVariant[]>;
-    getCarVariantDetail(carVariantId: string): CarVariant | Promise<CarVariant>;
+    getCarVariantDetail(carVariantIdDto: CarVariantIdDto): CarVariant | Promise<CarVariant>;
     listGarage(): Nullable<Garage[]> | Promise<Nullable<Garage[]>>;
-    getGarageDetail(garageById: string): Garage | Promise<Garage>;
+    getGarageDetail(garageIdDto: GarageIdDto): Garage | Promise<Garage>;
     listSellerDetail(): Nullable<SellerDetail[]> | Promise<Nullable<SellerDetail[]>>;
     getSellerDetail(sellerId: string): SellerDetail | Promise<SellerDetail>;
     listDealer(): Nullable<Dealer> | Promise<Nullable<Dealer>>;
@@ -484,46 +564,52 @@ export interface IQuery {
     listTeleCallingEntry(): Nullable<TeleCallingEntry[]> | Promise<Nullable<TeleCallingEntry[]>>;
     getTeleCallingEntryDetail(teleCallingId: string): Nullable<TeleCallingEntry> | Promise<Nullable<TeleCallingEntry>>;
     listLeadSource(): Nullable<LeadSource[]> | Promise<Nullable<LeadSource[]>>;
-    getLeadSourceDetail(leadSourceObjectId: string): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
+    getLeadSourceDetail(leadSourceIdDto: LeadSourceIdDto): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
     listLeadType(): Nullable<LeadTypes[]> | Promise<Nullable<LeadTypes[]>>;
-    getLeadTypeDetail(leadTypeId: string): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
+    getLeadTypeDetail(leadTypeIdDto: LeadTypeIdDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
 }
 
 export interface IMutation {
     addBrand(addBrandDto: CreateBrandDto): Brand | Promise<Brand>;
-    updateBrand(updateBrandDto: UpdateBrandDto, brandId: string): Brand | Promise<Brand>;
-    deleteBrand(brandId: string): Brand | Promise<Brand>;
-    deleteManyBrands(brandIds: string[]): Brand | Promise<Brand>;
+    updateBrand(updateBrandDto: UpdateBrandDto): Brand | Promise<Brand>;
+    updateBrandStatus(updateBrandStatusDto: UpdateBrandStatusDto): Brand | Promise<Brand>;
+    deleteBrand(brandIdDto: BrandIdDto): Brand | Promise<Brand>;
+    deleteManyBrands(brandIdDto: BrandIdDto): Brand | Promise<Brand>;
     addBodyType(addBodyTypeDto: CreateBodyTypeDto): BodyType | Promise<BodyType>;
-    deleteBodyType(deleteBodyTypeDto: DeleteBodyTypeDto): BodyType | Promise<BodyType>;
-    deleteManyBodyTypes(deleteManyBodyTypeDto: DeleteBodyTypeDto): BodyType | Promise<BodyType>;
-    updateBodyType(updateBodyTypeDto: UpdateBodyTypeDto, bodyTypeId: string): BodyType | Promise<BodyType>;
+    deleteBodyType(bodyTypeIdDto: BodyTypeIdDto): BodyType | Promise<BodyType>;
+    deleteManyBodyTypes(bodyTypeIdDto: BodyTypeIdDto): BodyType | Promise<BodyType>;
+    updateBodyType(updateBodyTypeDto: UpdateBodyTypeDto): BodyType | Promise<BodyType>;
     updateBodyTypeStatus(updateBodyTypeStatusDto: UpdateBodyTypeStatusDto): BodyType | Promise<BodyType>;
     addCarModel(addCarModelDto: CreateCarModelDto): CarModel | Promise<CarModel>;
-    updateCarModel(updateCarModelDto: UpdateCarModelDto, carModelId: string): CarModel | Promise<CarModel>;
-    deleteCarModel(carModelId: string): CarModel | Promise<CarModel>;
-    deleteManyCarModel(carModelIds: string[]): CarModel | Promise<CarModel>;
+    updateCarModel(updateCarModelDto: UpdateCarModelDto): CarModel | Promise<CarModel>;
+    updateCarModelStatus(updateCarModelStatusDto: UpdateCarModelStatusDto): CarModel | Promise<CarModel>;
+    deleteCarModel(carModelIdDto: CarModelIdDto): CarModel | Promise<CarModel>;
+    deleteManyCarModel(carModelIdDto: CarModelIdDto): CarModel | Promise<CarModel>;
     addColor(addColorDto: CreateColorDto): Nullable<Color> | Promise<Nullable<Color>>;
     deleteColor(colorIdDto: ColorIdDto): Nullable<Color> | Promise<Nullable<Color>>;
     deleteManyColor(colorIdDto: ColorIdDto): Color[] | Promise<Color[]>;
     updateColor(updateColorDto: UpdateColorDto): Color | Promise<Color>;
     updateColorStatus(updateColorStatusDto: UpdateColorStatusDto): Color | Promise<Color>;
     addFuelType(addFuelTypeDto: CreateFuelTypeDto): FuelType | Promise<FuelType>;
-    deleteFuelType(fuelTypeId: string): FuelType | Promise<FuelType>;
-    deleteManyFuelTypes(fuelTypeIds: string[]): FuelType | Promise<FuelType>;
-    updateFuelType(UpdateFuelTypeDto: UpdateFuelTypeDto, fuelTypeId: string): FuelType | Promise<FuelType>;
-    addYear(addYearDto: CreateMakeYearDto): MakeYear | Promise<MakeYear>;
-    updateYear(updateYearDto: UpdateMakeYearDto, yearId: string): Nullable<MakeYear> | Promise<Nullable<MakeYear>>;
-    deleteYear(YearId: string): MakeYear[] | Promise<MakeYear[]>;
-    deleteManyYears(yearIds: string[]): MakeYear[] | Promise<MakeYear[]>;
+    deleteFuelType(fuelTypeIdDto: FuelTypeIdDto): FuelType | Promise<FuelType>;
+    deleteManyFuelTypes(fuelTypeIdDto: FuelTypeIdDto): FuelType | Promise<FuelType>;
+    updateFuelType(updateFuelTypeDto: UpdateFuelTypeDto): FuelType | Promise<FuelType>;
+    updateFuelTypeStatus(updateFuelTypeStatusDto: UpdateFuelTypeStatusDto): FuelType | Promise<FuelType>;
+    addYear(addMakeYearDto: CreateMakeYearDto): MakeYear | Promise<MakeYear>;
+    updateYearStatus(updateMakeYearStatusDto: UpdateMakeyearStatusDto): MakeYear | Promise<MakeYear>;
+    updateYear(updateMakeYearDto: UpdateMakeYearDto): Nullable<MakeYear> | Promise<Nullable<MakeYear>>;
+    deleteYear(makeYearIdDto: MakeYearIdDto): MakeYear[] | Promise<MakeYear[]>;
+    deleteManyYears(makeYearIdDto: MakeYearIdDto): MakeYear[] | Promise<MakeYear[]>;
     addCarVariant(addCarVariantDto: CreateCarVariantDto): CarVariant | Promise<CarVariant>;
-    updateCarVariant(updateCarVariantDto: UpdateCarVariantDto, carVariantId: string): CarVariant | Promise<CarVariant>;
-    deleteCarVariant(carVariantId: string): CarVariant | Promise<CarVariant>;
-    deleteManyCarVariant(carVariantIds: string[]): CarVariant | Promise<CarVariant>;
+    updateCarVariant(updateCarVariantDto: UpdateCarVariantDto): CarVariant | Promise<CarVariant>;
+    updateCarVariantStatus(updateCarVariantStatusDto: UpdateCarVariantStatusDto): CarVariant | Promise<CarVariant>;
+    deleteCarVariant(carVariantIdDto: CarVariantIdDto): CarVariant | Promise<CarVariant>;
+    deleteManyCarVariant(carVariantIdDto: CarVariantIdDto): CarVariant | Promise<CarVariant>;
     addGarage(addGarageDto: CreateGarageDto): Nullable<Garage> | Promise<Nullable<Garage>>;
-    updateGarage(updateGarageDto: UpdateGarageDto, garageId: string): Garage | Promise<Garage>;
-    deleteGarage(garageId: string): Garage | Promise<Garage>;
-    deleteManyGarage(garageIds: string[]): Garage | Promise<Garage>;
+    updateGarage(updateGarageDto: UpdateGarageDto): Garage | Promise<Garage>;
+    updateGarageStatus(updateGarageStatusDto: UpdateGarageStatusDto): Garage | Promise<Garage>;
+    deleteGarage(garageIdDto: GarageIdDto): Garage | Promise<Garage>;
+    deleteManyGarage(garageIdDto: GarageIdDto): Garage | Promise<Garage>;
     addSeller(addSellerDto: CreateSellerDetailDto): SellerDetail | Promise<SellerDetail>;
     updateSeller(updateSellerDto: UpdateSellerDetailDto, sellerId: string): SellerDetail | Promise<SellerDetail>;
     deleteSeller(SellerID: string): SellerDetail[] | Promise<SellerDetail[]>;
@@ -552,14 +638,16 @@ export interface IMutation {
     updateTeleCallingEntry(updateTeleCallingDto: TeleCallingEntryUpdate, teleCallingId: string): Nullable<TeleCallingEntry> | Promise<Nullable<TeleCallingEntry>>;
     deleteTeleCalling(teleCalledId: string): Nullable<TeleCallingEntry> | Promise<Nullable<TeleCallingEntry>>;
     deleteManyTeleCalling(teleCallingIds: string): Nullable<TeleCallingEntry> | Promise<Nullable<TeleCallingEntry>>;
-    addLeadSource(addLeadSourceDto: LeadSoucreUpdateDto): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
-    updateLeadSource(updateLeadSourceDto: LeadSoucreUpdateDto, leadSourceObjectId: string): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
-    deleteLeadSource(leadSourceObectId: string): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
-    deleteManyLeadSource(leadSourceObjectIds: string[]): Nullable<LeadSource[]> | Promise<Nullable<LeadSource[]>>;
-    addLeadTypes(createLeadTypeDto: LeadTypeCreateDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
-    updateLeadTypes(leadTypeId: string, updateLeadTypeDto: LeadTypeUpdateDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
-    deleteLeadTypes(leadTypeId: string): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
-    deleteManyLeadTypes(leadTypesIds: string[]): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
+    addLeadSource(addLeadSourceDto: CreateLeadSourceDto): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
+    updateLeadSource(updateLeadSourceDto: UpdateLeadSourceDto): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
+    updateLeadSourceStatus(updateLeadSourceStatusDto: UpdateLeadSourceStatusDto): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
+    deleteLeadSource(leadSourceIdDto: LeadSourceIdDto): Nullable<LeadSource> | Promise<Nullable<LeadSource>>;
+    deleteManyLeadSource(leadSourceIdDto: LeadSourceIdDto): Nullable<LeadSource[]> | Promise<Nullable<LeadSource[]>>;
+    addLeadType(addLeadTypeDto: CreateLeadTypeDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
+    updateLeadType(updateLeadTypeDto: UpdateLeadTypeDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
+    updateLeadTypeStatus(updateLeadTypeStatusDto: UpdateLeadTypeStatusDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
+    deleteLeadType(leadTypeIdDto: LeadTypeIdDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
+    deleteManyLeadType(leadTypeIdDto: LeadTypeIdDto): Nullable<LeadTypes> | Promise<Nullable<LeadTypes>>;
 }
 
 export type DateTime = any;

@@ -8,15 +8,15 @@ export type FuelTypeSchema = FuelType & Document;
 @ObjectType()
 @Schema({ timestamps: true })
 export class FuelType {
-  @Field()
+  @Field(() => String)
   @Prop()
   name: string;
 
-  @Field()
-  @Prop({ type: String, enum: Status, default: Status.INACTIVE })
+  @Field(() => Status, {nullable: true})
+  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
   status: Status;
 
-  @Field()
+  @Field(() => Date, {nullable: true})
   @Prop({ type: Date, default: 0 })
   deleted_at: Date;
 }

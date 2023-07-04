@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CarModel } from '../schemas/car-model.schema';
 import { CarModelsRepository } from '../respositories/car-models.respository';
-import { UpdateCarModelDto } from '../dtos/car-model.update.dto';
+import { UpdateCarModelDto } from '../inputs/update.car-model.dto';
+import { CreateCarModelDto } from '../inputs/create.car-model.dto';
+import { CarModelIdDto } from '../inputs/car-model.id.dto';
+import { UpdateCarModelStatusDto } from '../inputs/update.car-model.status.dto';
 
 @Injectable()
 export class CarModelService {
@@ -16,34 +19,37 @@ export class CarModelService {
   }
 
   async createCarModel(
-    name: string,
-    created_by: string,
-    body_type_id: string,
-    brand_id: string,
+    createCarModelDto: CreateCarModelDto
   ): Promise<CarModel> {
-    return this.carModelRepository.create({
-      name,
-      created_by,
-      body_type_id,
-      brand_id,
-    });
+    return this.carModelRepository.create(createCarModelDto);
   }
 
-  async updateCarModel(
-    carModelId: string,
-    updateCarModelDto: UpdateCarModelDto,
+ async updateCarModel(
+    updateCarModelDto: UpdateCarModelDto
   ): Promise<any> {
     return this.carModelRepository.findOneAndUpdate(
-      { _id: carModelId },
-      updateCarModelDto,
+      {_id: updateCarModelDto.carModelId},
+      {name: updateCarModelDto.name,
+      status: updateCarModelDto.status,
+      brand_id: updateCarModelDto.brand_id,
+      body_type_id: updateCarModelDto.body_type_id
+      },
     );
   }
 
-  async deleteSingleCarModel(carModelId: string): Promise<CarModel> {
-    return this.carModelRepository.findOneAndDelete({ _id: carModelId });
+  async updateCarModelStatus(updateCarModelStatusDto: UpdateCarModelStatusDto): Promise<CarModel> {
+    return this.carModelRepository.findOneAndUpdate(
+      {_id: updateCarModelStatusDto.carModelId},
+      {status: updateCarModelStatusDto.status}
+    )
   }
 
-  async deleteManyCarModel(carModelIds: [string]): Promise<boolean> {
-    return this.carModelRepository.findManyAndDelete({ _id: carModelIds });
+
+  async deleteSingleCarModel(carModelIdDto: CarModelIdDto): Promise<CarModel> {
+    return this.carModelRepository.findOneAndDelete({ _id: carModelIdDto.carModelId });
+  }
+
+  async deleteManyCarModel(carModelIdDto: CarModelIdDto): Promise<boolean> {
+    return this.carModelRepository.findManyAndDelete({ _id: carModelIdDto.carModelId });
   }
 }

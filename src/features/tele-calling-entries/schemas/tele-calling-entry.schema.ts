@@ -8,35 +8,35 @@ export type TeleCallingEntrySchema = TeleCallingEntry & Document;
 @Schema({ timestamps: true })
 export class TeleCallingEntry {
   @Prop()
-  @Field()
+  @Field(() => String, {nullable: true})
   buyer_id: string;
 
   @Prop()
-  @Field()
+  @Field(() => Date, {nullable: true})
   visited_next_date: string;
 
   @Prop()
-  @Field()
+  @Field(() => Date, {nullable: true})
   next_visit_date: string;
 
   @Prop()
-  @Field()
+  @Field(() => Boolean, {nullable: true})
   finance_required: boolean;
 
   @Prop()
-  @Field()
+  @Field(() => String)
   remarks: string;
 
   @Prop()
-  @Field()
-  next_call_date: string;
+  @Field(() => Date)
+  next_call_date: Date;
 
   @Prop()
-  @Field()
+  @Field(() => String)
   created_by: string;
 
   @Prop()
-  @Field()
+  @Field(() => String)
   specail_instruction: string;
 
   @Prop({ type: Date, default: 0 })

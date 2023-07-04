@@ -9,7 +9,7 @@ import { Status } from "src/status.enums";
 export class CreateColorDto {
 
     @Validate(IsValidName, ["Color"])
-    @Field(() => String)
+    @Field(() => String, {nullable: true})
     name: string;
 
     @Validate(IsValidEnum, ["Color"])

@@ -4,7 +4,7 @@ import { BodyTypeService } from './services/body-types.service';
 import { CreateBodyTypeDto } from './inputs/create.body-type.dto';
 import { UpdateBodyTypeDto } from './inputs/update.body-type.dto';
 import { UpdateBodyTypeStatusDto } from './inputs/update.body-type.status.dto';
-import { DeleteBodyTypeDto } from './inputs/delete.body-type.dto';
+import { BodyTypeIdDto } from './inputs/body-type.id.dto';
 
 @Resolver()
 export class BodyTypeResolver {
@@ -17,9 +17,9 @@ export class BodyTypeResolver {
 
   @Query(() => BodyType, { name: 'getBodyTypeDetail', nullable: true })
   getBodyTypeDetail(
-    @Args({ name: 'bodyTypeId', type: () => ID }) id: string,
-  ): Promise<BodyType> {
-    return this.bodyTypeService.getBodyTypeById(id);
+      @Args('bodyTypeIdDto') bodyTypeIdDto: BodyTypeIdDto
+    ): Promise<BodyType> {
+    return this.bodyTypeService.getBodyTypeById(bodyTypeIdDto);
   }
 
   @Mutation(() => BodyType, { name: 'addBodyType' })
@@ -31,30 +31,29 @@ export class BodyTypeResolver {
 
   @Mutation(() => BodyType, { name: 'deleteBodyType' })
   deleteBodyType(
-    @Args('deleteBodyTypeDto') deleteBodyTypeDto: DeleteBodyTypeDto,
+    @Args('bodyTypeIdDto') bodyTypeIdDto: BodyTypeIdDto,
   ): Promise<BodyType | any> {
-    return this.bodyTypeService.deleteBodyType(deleteBodyTypeDto);
+    return this.bodyTypeService.deleteBodyType(bodyTypeIdDto);
   }
 
   @Mutation(() => BodyType, { name: 'deleteManyBodyTypes' })
   deleteManyBodyType(
-    @Args('deleteManyBodyTypeDto') deleteManyBodyTypeDto: DeleteBodyTypeDto ,
+    @Args('bodyTypeIdDto') bodyTypeIdDto : BodyTypeIdDto ,
   ): Promise<boolean> {
-    return this.bodyTypeService.deleteManyBodyType(deleteManyBodyTypeDto);
+    return this.bodyTypeService.deleteManyBodyType(bodyTypeIdDto);
   }
 
   @Mutation(() => BodyType, { name: 'updateBodyType' })
   updateBodyType(
-    @Args('updateBodyTypeDto') updateBodyTypeDto: UpdateBodyTypeDto,
-    @Args({ name: 'bodyTypeId', type: () => ID }) id: string,
+    @Args('updateBodyTypeDto') updateBodyTypeDto: UpdateBodyTypeDto
   ): Promise<BodyType> {
-    return this.bodyTypeService.updateBodyType(id, updateBodyTypeDto);
+    return this.bodyTypeService.updateBodyType(updateBodyTypeDto);
   }
 
   @Mutation(() => BodyType, {name: 'updateBodyTypeStatus'})
   updateBodyTypeStatus(
     @Args('updateBodyTypeStatusDto') updateBodyTypeStatusDto: UpdateBodyTypeStatusDto,
   ): Promise<BodyType> {
-    return this.bodyTypeService.updateBodyTypeStatus(updateBodyTypeStatusDto.bodyTypeId, updateBodyTypeStatusDto.status)
+    return this.bodyTypeService.updateBodyTypeStatus(updateBodyTypeStatusDto)
   }
 }

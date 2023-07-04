@@ -1,8 +1,11 @@
 import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
 import { CarVariantService } from './services/car-varaint.service';
 import { CarVariant } from './schemas/car-variant.schema';
-import { CreateCarVariantDto } from './dtos/car-variant.create';
-import { UpdateCarVariantDto } from './dtos/car-variant.update';
+import { CreateCarVariantDto } from './inputs/create.car-variant.dto';
+import { UpdateCarVariantDto } from './inputs/update.car-variant.dto';
+import { CarVariantIdDto } from './inputs/car-variant.id.dto';
+import { UpdateCarModelStatusDto } from 'src/graphql';
+import { UpdateCarVariantStatusDto } from './inputs/update.car-variant.status.dto';
 
 @Resolver()
 export class CarVariantResolver {
@@ -10,14 +13,14 @@ export class CarVariantResolver {
 
   @Query(() => [CarVariant], { name: 'listCarVariant' })
   async list(): Promise<CarVariant[]> {
-    return this.carVariantService.getCarVaraints(3, 1);
+    return this.carVariantService.getCarVaraints(10, 1);
   }
 
   @Query(() => CarVariant, { name: 'getCarVariantDetail' })
   async getCarVariantDetail(
-    @Args({ name: 'carVariantId', type: () => ID }) id: string,
-  ): Promise<CarVariant | any> {
-    return this.carVariantService.getCarVaraintById(id);
+    @Args('carVariantIdDto') carVariantIdDto: CarVariantIdDto
+    ): Promise<CarVariant | any> {
+    return this.carVariantService.getCarVaraintById(carVariantIdDto);
   }
 
   @Mutation(() => CarVariant, { name: 'addCarVariant' })
@@ -25,30 +28,35 @@ export class CarVariantResolver {
     @Args('addCarVariantDto') addCarVariantDto: CreateCarVariantDto,
   ): Promise<CarVariant> {
     return this.carVariantService.createCarVariant(
-      addCarVariantDto.name,
-      addCarVariantDto.model_id,
+      addCarVariantDto
     );
   }
 
   @Mutation(() => CarVariant, { name: 'updateCarVariant' })
   async updateCarVariant(
-    @Args('updateCarVariantDto') updateCarVariantDto: UpdateCarVariantDto,
-    @Args({ name: 'carVariantId', type: () => ID }) id: string,
+    @Args('updateCarVariantDto') updateCarVariantDto: UpdateCarVariantDto
   ): Promise<CarVariant> {
-    return this.carVariantService.updateCarVariant(id, updateCarVariantDto);
+    return this.carVariantService.updateCarVariant(updateCarVariantDto);
+  }
+
+  @Mutation(() => CarVariant, {name: 'updateCarVariantStatus'})
+  async updateCarVariantStatus(
+    @Args('updateCarVariantStatusDto') updateCarVariantStatusDto: UpdateCarVariantStatusDto
+  ): Promise<CarVariant> {
+    return this.carVariantService.updatCarVariantStatus(updateCarVariantStatusDto)
   }
 
   @Mutation(() => CarVariant, { name: 'deleteCarVariant' })
   deleteCarVariant(
-    @Args({ name: 'carVariantId', type: () => ID }) id: string,
-  ): Promise<CarVariant | any> {
-    return this.carVariantService.deleteCarVariant(id);
+    @Args('carVariantIdDto') carVariantIdSto: CarVariantIdDto
+    ): Promise<CarVariant | any> {
+    return this.carVariantService.deleteCarVariant(carVariantIdSto);
   }
 
   @Mutation(() => CarVariant, { name: 'deleteManyCarVariant' })
   deleteManyCarVariant(
-    @Args({ name: 'carVariantIds', type: () => [ID] }) ids: [string],
-  ): Promise<boolean> {
-    return this.carVariantService.deleteManyCarVariant(ids);
+    @Args('carVariantIdDto') carVariantIdDto: CarVariantIdDto
+    ): Promise<boolean> {
+    return this.carVariantService.deleteManyCarVariant(carVariantIdDto);
   }
 }

@@ -1,8 +1,11 @@
 import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
 import { FuelTypeService } from './services/fuel-type.services';
 import { FuelType } from './schemas/fuel-type.schema';
-import { UpdateFuelTypeDto } from './dtos/fuel-type.update.dto';
-import { CreateFuelTypeDto } from './dtos/fuel-type.created.dto';
+import { CreateFuelTypeDto } from './inputs/create.fuel-type.dto';
+import { UpdateFuelTypeDto } from './inputs/update.fuel-type.dto';
+import { FuelTypeIdDto } from './inputs/fuel-type.id.dto';
+import { UpdateFuelTypeStatusDto } from './inputs/update.fuel-type.status.dto';
+
 
 @Resolver()
 export class FuelTypeResolver {
@@ -10,42 +13,49 @@ export class FuelTypeResolver {
 
   @Query(() => [FuelType], { name: 'listFuelType' })
   list(): Promise<FuelType[]> {
-    return this.fuelTypeService.getFuelTypes(3, 1);
+    return this.fuelTypeService.getFuelTypes(10, 1);
   }
 
   @Query(() => FuelType, { name: 'getFuelTypeDetail', nullable: true })
   getFuelTypeDetail(
-    @Args({ name: 'fuelTypeId', type: () => ID }) id: string,
-  ): Promise<FuelType> {
-    return this.fuelTypeService.getFuelTypeById(id);
+    @Args('fuelTypeIdDto') fuelTypeIdDto: FuelTypeIdDto
+    ): Promise<FuelType> {
+    return this.fuelTypeService.getFuelTypeById(fuelTypeIdDto);
   }
 
   @Mutation(() => FuelType, { name: 'addFuelType' })
   addFuelType(
-    @Args('addFuelTypeDto') addFuelTypeDto: CreateFuelTypeDto,
-  ): Promise<FuelType> {
-    return this.fuelTypeService.createFuelType(addFuelTypeDto.name);
+    @Args('addFuelTypeDto') createFuelTypeDto: CreateFuelTypeDto
+    ): Promise<FuelType> {
+    return this.fuelTypeService.createFuelType(createFuelTypeDto);
   }
 
   @Mutation(() => FuelType, { name: 'deleteFuelType' })
   deleteFuelType(
-    @Args({ name: 'fuelTypeId', type: () => ID }) id: string,
+   @Args('fuelTypeIdDto') fuelTypeIdDto: FuelTypeIdDto
   ): Promise<FuelType> {
-    return this.fuelTypeService.deleteFuelType(id);
+    return this.fuelTypeService.deleteFuelType(fuelTypeIdDto);
   }
 
   @Mutation(() => FuelType, { name: 'deleteManyFuelTypes' })
   deleteManyFuelType(
-    @Args({ name: 'fuelTypeIds', type: () => [ID] }) ids: [string],
-  ): Promise<boolean> {
-    return this.fuelTypeService.deleteManyFuelType(ids);
+    @Args('fuelTypeIdDto') fuelTypeIdDto: FuelTypeIdDto
+    ): Promise<boolean> {
+    return this.fuelTypeService.deleteManyFuelType(fuelTypeIdDto);
   }
 
   @Mutation(() => FuelType, { name: 'updateFuelType' })
   updateFuelType(
-    @Args('UpdateFuelTypeDto') updateFuelTypeDto: UpdateFuelTypeDto,
-    @Args({ name: 'fuelTypeId', type: () => ID }) id: string,
+   @Args('updateFuelTypeDto') updateFuelTypeDto: UpdateFuelTypeDto
   ): Promise<FuelType> {
-    return this.fuelTypeService.updateFuelType(id, updateFuelTypeDto);
+    return this.fuelTypeService.updateFuelType(updateFuelTypeDto);
   }
+
+  @Mutation(() => FuelType, {name: 'updateFuelTypeStatus'})
+  updateFuelTypeStatus(
+    @Args('updateFuelTypeStatusDto') updateFuelTypeStatusDto: UpdateFuelTypeStatusDto
+  ): Promise<FuelType> {
+    return this.fuelTypeService.updateFuelTypeStatus(updateFuelTypeStatusDto)
+  }
+
 }

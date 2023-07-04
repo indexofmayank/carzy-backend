@@ -14,7 +14,6 @@ export class CreateBodyTypeDto {
   name: string;
 
   @Validate(IsValidEnum, ["Body Type"])
-  @IsEnum(Status)
   @Field(() => Status, {nullable: true})
   status: Status;
 

@@ -11,13 +11,26 @@ export class IsValidMongooseId implements ValidatorConstraintInterface {
     value: any,
     validationArguments?: ValidationArguments,
   ): boolean | Promise<boolean> {
-    if (!value) {
-      return false;
+    if(validationArguments.constraints[1] === 'can-null'){   //condition for can-null
+      if(!value){
+        return true
+      }else {
+      if(!mongoose.Types.ObjectId.isValid(value)) return false
+  }
     }
-    for (let index = 0; index < value.length; index++) {
-      const element = value[index];
-      if (!mongoose.Types.ObjectId.isValid(element)) return false;
-    } 
+
+    // if (!value) {                               //if can-null is not provided
+    //   return false;
+    // }
+    // if(typeof value === 'string'){
+    //   if(!mongoose.Types.ObjectId.isValid(value)) return false
+    // }else
+    //{
+      for (let index = 0; index < value.length; index++) {
+        const element = value[index];
+        if (!mongoose.Types.ObjectId.isValid(element)) return false;
+      } 
+   // }
     return true;
   }
 

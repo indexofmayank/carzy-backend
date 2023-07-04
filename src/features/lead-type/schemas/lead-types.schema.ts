@@ -9,20 +9,20 @@ export type LeadTypeSchema = LeadTypes & Document;
 @Schema({ timestamps: true })
 export class LeadTypes {
   @Prop()
-  @Field()
+  @Field(() => String)
   name: string;
 
-  @Prop({ type: String, enum: Status, default: Status.INACTIVE })
-  @Field()
+  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
+  @Field(() => Status, {nullable: true})
   status: string;
 
   @Prop()
-  @Field()
+  @Field(() => String, {nullable: true})
   dealer_id: string;
 
-  @Field()
+  @Field(() => Date, {nullable: true})
   @Prop({ type: Date, default: 0 })
-  deleted_id: Date;
+  deleted_at: Date;
 }
 
 export const LeadTypeSchema = SchemaFactory.createForClass(LeadTypes);

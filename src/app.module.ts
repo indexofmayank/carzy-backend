@@ -37,6 +37,7 @@ import { DealersModule } from './features/dealers/dealers.module';
 import jwtConfig from './config/jwt.config';
 import { JwtStrategy } from './features/auth/strategies/jwt.strategy';
 import { LocalStrategy } from './features/auth/strategies/local.strategy';
+import { StudentsModule } from './students/students.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -80,6 +81,7 @@ import { LocalStrategy } from './features/auth/strategies/local.strategy';
       signOptions: { expiresIn: '1h' },
     }),
     DealersModule,
+    StudentsModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AppResolver, AuthService, JwtStrategy, LocalStrategy],

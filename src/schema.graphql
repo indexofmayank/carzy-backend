@@ -6,8 +6,6 @@ type Brand {
   name: String
   status: Status
   deleted_at: DateTime
-  created_at: DateTime
-  updated_at: DateTime
 }
 
 enum Status {
@@ -25,17 +23,14 @@ type BodyType {
   name: String
   status: Status
   deleted_at: DateTime
-  updated_at: DateTime
-  created_at: DateTime
 }
 
 type CarModel {
-  name: String!
-  body_type_id: ID!
-  brand_id: ID!
-  status: String!
-  created_by: String!
-  deleted_at: DateTime!
+  name: String
+  body_type_id: String
+  brand_id: String
+  status: Status
+  deleted_at: DateTime
 }
 
 type Color {
@@ -46,28 +41,28 @@ type Color {
 
 type FuelType {
   name: String!
-  status: String!
-  deleted_at: DateTime!
+  status: Status
+  deleted_at: DateTime
 }
 
 type MakeYear {
-  year: Float!
-  status: String!
-  deleted_at: DateTime!
+  year: Int!
+  status: Status
+  deleted_at: DateTime
 }
 
 type CarVariant {
-  name: String!
-  status: String!
-  model_id: ID!
-  deleted_at: DateTime!
+  name: String
+  status: Status
+  model_id: String
+  deleted_at: DateTime
 }
 
 type Garage {
   name: String!
-  model_id: ID!
-  status: String!
-  deleted_at: DateTime!
+  model_id: String
+  status: Status
+  deleted_at: DateTime
 }
 
 type SellerDetail {
@@ -167,36 +162,36 @@ type TeleCallingEntry {
 }
 
 type LeadSource {
-  name: String!
-  status: String!
-  dealer_id: String!
+  name: String
+  status: Status
+  dealer_id: String
 }
 
 type LeadTypes {
   name: String!
-  status: String!
-  dealer_id: String!
-  deleted_id: DateTime!
+  status: Status
+  dealer_id: String
+  deleted_at: DateTime
 }
 
 type Query {
   index: String!
   listBrand: [Brand!]
-  getBrandDetail(brandId: ID!): Brand
+  getBrandDetail(brandIdDto: BrandIdDto!): Brand
   listBodyType: [BodyType!]
-  getBodyTypeDetail(bodyTypeId: ID!): BodyType
+  getBodyTypeDetail(bodyTypeIdDto: BodyTypeIdDto!): BodyType
   listCarModel: [CarModel!]
   getCarModelDetail(carModelId: ID!): CarModel
   listColors: [Color!]
   getColorDetail(colorIdDto: ColorIdDto!): Color
   listFuelType: [FuelType!]!
-  getFuelTypeDetail(fuelTypeId: ID!): FuelType
+  getFuelTypeDetail(fuelTypeIdDto: FuelTypeIdDto!): FuelType
   listYear: [MakeYear!]
-  getYeadDetail(yearId: String!): MakeYear!
+  getYeadDetail(makeYearIdDto: MakeYearIdDto!): MakeYear!
   listCarVariant: [CarVariant!]!
-  getCarVariantDetail(carVariantId: ID!): CarVariant!
+  getCarVariantDetail(carVariantIdDto: CarVariantIdDto!): CarVariant!
   listGarage: [Garage!]
-  getGarageDetail(garageById: ID!): Garage!
+  getGarageDetail(garageIdDto: GarageIdDto!): Garage!
   listSellerDetail: [SellerDetail!]
   getSellerDetail(sellerId: String!): SellerDetail!
   listDealer: Dealer
@@ -212,50 +207,88 @@ type Query {
   listTeleCallingEntry: [TeleCallingEntry!]
   getTeleCallingEntryDetail(teleCallingId: ID!): TeleCallingEntry
   listLeadSource: [LeadSource!]
-  getLeadSourceDetail(leadSourceObjectId: ID!): LeadSource
+  getLeadSourceDetail(leadSourceIdDto: LeadSourceIdDto!): LeadSource
   listLeadType: [LeadTypes!]
-  getLeadTypeDetail(leadTypeId: ID!): LeadTypes
+  getLeadTypeDetail(leadTypeIdDto: LeadTypeIdDto!): LeadTypes
+}
+
+input BrandIdDto {
+  brandId: String!
+}
+
+input BodyTypeIdDto {
+  bodyTypeId: [String!]!
 }
 
 input ColorIdDto {
   colorId: [String!]!
 }
 
+input FuelTypeIdDto {
+  fuelTypeId: [String!]!
+}
+
+input MakeYearIdDto {
+  makeYearId: [String!]!
+}
+
+input CarVariantIdDto {
+  carVariantId: [String!]!
+}
+
+input GarageIdDto {
+  garageId: [String!]!
+}
+
+input LeadSourceIdDto {
+  leadSourceId: [String!]!
+}
+
+input LeadTypeIdDto {
+  leadTypeId: [String!]!
+}
+
 type Mutation {
   addBrand(addBrandDto: CreateBrandDto!): Brand!
-  updateBrand(updateBrandDto: UpdateBrandDto!, brandId: ID!): Brand!
-  deleteBrand(brandId: ID!): Brand!
-  deleteManyBrands(brandIds: [ID!]!): Brand!
+  updateBrand(updateBrandDto: UpdateBrandDto!): Brand!
+  updateBrandStatus(updateBrandStatusDto: UpdateBrandStatusDto!): Brand!
+  deleteBrand(brandIdDto: BrandIdDto!): Brand!
+  deleteManyBrands(brandIdDto: BrandIdDto!): Brand!
   addBodyType(addBodyTypeDto: CreateBodyTypeDto!): BodyType!
-  deleteBodyType(deleteBodyTypeDto: DeleteBodyTypeDto!): BodyType!
-  deleteManyBodyTypes(deleteManyBodyTypeDto: DeleteBodyTypeDto!): BodyType!
-  updateBodyType(updateBodyTypeDto: UpdateBodyTypeDto!, bodyTypeId: ID!): BodyType!
+  deleteBodyType(bodyTypeIdDto: BodyTypeIdDto!): BodyType!
+  deleteManyBodyTypes(bodyTypeIdDto: BodyTypeIdDto!): BodyType!
+  updateBodyType(updateBodyTypeDto: UpdateBodyTypeDto!): BodyType!
   updateBodyTypeStatus(updateBodyTypeStatusDto: UpdateBodyTypeStatusDto!): BodyType!
   addCarModel(addCarModelDto: CreateCarModelDto!): CarModel!
-  updateCarModel(updateCarModelDto: UpdateCarModelDto!, carModelId: ID!): CarModel!
-  deleteCarModel(carModelId: ID!): CarModel!
-  deleteManyCarModel(carModelIds: [ID!]!): CarModel!
+  updateCarModel(updateCarModelDto: UpdateCarModelDto!): CarModel!
+  updateCarModelStatus(updateCarModelStatusDto: UpdateCarModelStatusDto!): CarModel!
+  deleteCarModel(carModelIdDto: CarModelIdDto!): CarModel!
+  deleteManyCarModel(carModelIdDto: CarModelIdDto!): CarModel!
   addColor(addColorDto: CreateColorDto!): Color
   deleteColor(colorIdDto: ColorIdDto!): Color
   deleteManyColor(colorIdDto: ColorIdDto!): [Color!]!
   updateColor(updateColorDto: UpdateColorDto!): Color!
   updateColorStatus(updateColorStatusDto: UpdateColorStatusDto!): Color!
   addFuelType(addFuelTypeDto: CreateFuelTypeDto!): FuelType!
-  deleteFuelType(fuelTypeId: ID!): FuelType!
-  deleteManyFuelTypes(fuelTypeIds: [ID!]!): FuelType!
-  updateFuelType(UpdateFuelTypeDto: UpdateFuelTypeDto!, fuelTypeId: ID!): FuelType!
-  addYear(addYearDto: CreateMakeYearDto!): MakeYear!
-  updateYear(updateYearDto: UpdateMakeYearDto!, yearId: ID!): MakeYear
-  deleteYear(YearId: ID!): [MakeYear!]!
-  deleteManyYears(yearIds: [ID!]!): [MakeYear!]!
+  deleteFuelType(fuelTypeIdDto: FuelTypeIdDto!): FuelType!
+  deleteManyFuelTypes(fuelTypeIdDto: FuelTypeIdDto!): FuelType!
+  updateFuelType(updateFuelTypeDto: UpdateFuelTypeDto!): FuelType!
+  updateFuelTypeStatus(updateFuelTypeStatusDto: UpdateFuelTypeStatusDto!): FuelType!
+  addYear(addMakeYearDto: CreateMakeYearDto!): MakeYear!
+  updateYearStatus(updateMakeYearStatusDto: UpdateMakeyearStatusDto!): MakeYear!
+  updateYear(updateMakeYearDto: UpdateMakeYearDto!): MakeYear
+  deleteYear(makeYearIdDto: MakeYearIdDto!): [MakeYear!]!
+  deleteManyYears(makeYearIdDto: MakeYearIdDto!): [MakeYear!]!
   addCarVariant(addCarVariantDto: CreateCarVariantDto!): CarVariant!
-  updateCarVariant(updateCarVariantDto: UpdateCarVariantDto!, carVariantId: ID!): CarVariant!
-  deleteCarVariant(carVariantId: ID!): CarVariant!
-  deleteManyCarVariant(carVariantIds: [ID!]!): CarVariant!
+  updateCarVariant(updateCarVariantDto: UpdateCarVariantDto!): CarVariant!
+  updateCarVariantStatus(updateCarVariantStatusDto: UpdateCarVariantStatusDto!): CarVariant!
+  deleteCarVariant(carVariantIdDto: CarVariantIdDto!): CarVariant!
+  deleteManyCarVariant(carVariantIdDto: CarVariantIdDto!): CarVariant!
   addGarage(addGarageDto: CreateGarageDto!): Garage
-  updateGarage(updateGarageDto: UpdateGarageDto!, garageId: ID!): Garage!
-  deleteGarage(garageId: ID!): Garage!
-  deleteManyGarage(garageIds: [ID!]!): Garage!
+  updateGarage(updateGarageDto: UpdateGarageDto!): Garage!
+  updateGarageStatus(updateGarageStatusDto: UpdateGarageStatusDto!): Garage!
+  deleteGarage(garageIdDto: GarageIdDto!): Garage!
+  deleteManyGarage(garageIdDto: GarageIdDto!): Garage!
   addSeller(addSellerDto: CreateSellerDetailDto!): SellerDetail!
   updateSeller(updateSellerDto: UpdateSellerDetailDto!, sellerId: ID!): SellerDetail!
   deleteSeller(SellerID: ID!): [SellerDetail!]!
@@ -284,14 +317,16 @@ type Mutation {
   updateTeleCallingEntry(updateTeleCallingDto: TeleCallingEntryUpdate!, teleCallingId: String!): TeleCallingEntry
   deleteTeleCalling(teleCalledId: ID!): TeleCallingEntry
   deleteManyTeleCalling(teleCallingIds: ID!): TeleCallingEntry
-  addLeadSource(addLeadSourceDto: LeadSoucreUpdateDto!): LeadSource
-  updateLeadSource(updateLeadSourceDto: LeadSoucreUpdateDto!, leadSourceObjectId: ID!): LeadSource
-  deleteLeadSource(leadSourceObectId: ID!): LeadSource
-  deleteManyLeadSource(leadSourceObjectIds: [ID!]!): [LeadSource!]
-  addLeadTypes(createLeadTypeDto: LeadTypeCreateDto!): LeadTypes
-  updateLeadTypes(leadTypeId: ID!, updateLeadTypeDto: LeadTypeUpdateDto!): LeadTypes
-  deleteLeadTypes(leadTypeId: ID!): LeadTypes
-  deleteManyLeadTypes(leadTypesIds: [ID!]!): LeadTypes
+  addLeadSource(addLeadSourceDto: CreateLeadSourceDto!): LeadSource
+  updateLeadSource(updateLeadSourceDto: UpdateLeadSourceDto!): LeadSource
+  updateLeadSourceStatus(updateLeadSourceStatusDto: UpdateLeadSourceStatusDto!): LeadSource
+  deleteLeadSource(leadSourceIdDto: LeadSourceIdDto!): LeadSource
+  deleteManyLeadSource(leadSourceIdDto: LeadSourceIdDto!): [LeadSource!]
+  addLeadType(addLeadTypeDto: CreateLeadTypeDto!): LeadTypes
+  updateLeadType(updateLeadTypeDto: UpdateLeadTypeDto!): LeadTypes
+  updateLeadTypeStatus(updateLeadTypeStatusDto: UpdateLeadTypeStatusDto!): LeadTypes
+  deleteLeadType(leadTypeIdDto: LeadTypeIdDto!): LeadTypes
+  deleteManyLeadType(leadTypeIdDto: LeadTypeIdDto!): LeadTypes
 }
 
 input CreateBrandDto {
@@ -304,6 +339,12 @@ input UpdateBrandDto {
   name: String
   status: Status
   deleted_at: DateTime
+  brandId: [String!]
+}
+
+input UpdateBrandStatusDto {
+  status: Status!
+  brandId: [String!]!
 }
 
 input CreateBodyTypeDto {
@@ -312,14 +353,11 @@ input CreateBodyTypeDto {
   deleted_at: DateTime
 }
 
-input DeleteBodyTypeDto {
-  bodyTypeId: [String!]!
-}
-
 input UpdateBodyTypeDto {
   name: String!
   status: Status
   deleted_at: DateTime
+  bodyTypeId: String!
 }
 
 input UpdateBodyTypeStatusDto {
@@ -328,28 +366,36 @@ input UpdateBodyTypeStatusDto {
 }
 
 input CreateCarModelDto {
-  name: String!
-  status: String!
-  created_by: String!
-  body_type_id: ID!
-  brand_id: ID!
+  name: String
+  status: Status
+  body_type_id: String
+  brand_id: String
 }
 
 input UpdateCarModelDto {
-  name: String!
-  status: String!
-  created_by: String!
-  body_type_id: ID!
-  brand_id: ID!
+  name: String
+  status: Status
+  body_type_id: String
+  brand_id: String
+  carModelId: String!
+}
+
+input UpdateCarModelStatusDto {
+  status: Status!
+  carModelId: [String!]!
+}
+
+input CarModelIdDto {
+  carModelId: [String!]!
 }
 
 input CreateColorDto {
-  name: String!
+  name: String
   status: Status
 }
 
 input UpdateColorDto {
-  name: String!
+  name: String
   status: Status
   colorId: [String!]!
 }
@@ -360,47 +406,71 @@ input UpdateColorStatusDto {
 }
 
 input CreateFuelTypeDto {
-  name: String!
-  status: String!
+  name: String
+  status: Status
 }
 
 input UpdateFuelTypeDto {
-  name: String!
-  status: String!
+  name: String
+  status: Status
+  fuelTypeId: [String!]!
+}
+
+input UpdateFuelTypeStatusDto {
+  status: Status!
+  fuelTypeId: [String!]!
 }
 
 input CreateMakeYearDto {
-  year: Float!
-  status: String!
+  year: Int!
+  status: String
+}
+
+input UpdateMakeyearStatusDto {
+  status: Status!
+  makeYearId: [String!]!
 }
 
 input UpdateMakeYearDto {
-  year: Float!
-  status: String!
+  year: Int!
+  status: String
+  makeYearId: [String!]!
 }
 
 input CreateCarVariantDto {
-  name: String!
-  status: String!
-  model_id: ID!
+  name: String
+  status: Status
+  model_id: String
 }
 
 input UpdateCarVariantDto {
-  name: String!
-  status: String!
-  model_id: ID!
+  name: String
+  status: Status
+  model_id: String
+  carVariantId: String!
+}
+
+input UpdateCarVariantStatusDto {
+  status: Status!
+  carVariantId: [String!]!
 }
 
 input CreateGarageDto {
   name: String!
-  model_id: String!
-  status: String!
+  model_id: [String!]!
+  status: Status
 }
 
 input UpdateGarageDto {
   name: String!
-  model_id: String!
-  status: String!
+  model_id: [String!]!
+  status: Status
+  garageId: [String!]!
+}
+
+input UpdateGarageStatusDto {
+  status: Status!
+  garageId: [String!]!
 }
 
 input CreateSellerDetailDto {
@@ -543,20 +613,38 @@ input TeleCallingEntryUpdate {
   specail_instruction: String!
 }
 
-input LeadSoucreUpdateDto {
+input CreateLeadSourceDto {
   name: String!
-  status: String!
-  dealer_id: String!
+  status: Status
+  dealer_id: [String!]
 }
 
-input LeadTypeCreateDto {
+input UpdateLeadSourceDto {
   name: String!
-  status: String!
-  dealer_id: String!
+  status: Status
+  dealer_id: [String!]
+  leadSourceId: [String!]!
 }
 
-input LeadTypeUpdateDto {
+input UpdateLeadSourceStatusDto {
+  status: Status!
+  leadSourceId: [String!]!
+}
+
+input CreateLeadTypeDto {
   name: String!
-  status: String!
-  dealer_id: String!
+  status: Status
+  dealer_id: String
+}
+
+input UpdateLeadTypeDto {
+  name: String!
+  status: Status
+  dealer_id: String
+  leadTypeId: [String!]!
+}
+
+input UpdateLeadTypeStatusDto {
+  leadTypeId: [String!]!
+  status: Status!
 }

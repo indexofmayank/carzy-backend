@@ -4,7 +4,6 @@ import {
   TeleCallingEntrySchema,
   TeleCallingEntry,
 } from './schemas/tele-calling-entry.schema';
-import { TeleCallingEntriesController } from './tele-calling-entries.controller';
 import { TeleCallingEntriesRepository } from './repositories/tele-calling-entries.repository';
 import { TeleCallingEntriesService } from './services/tele-calling-entries.service';
 import { TeleCallingResolver } from './tele-calling-entries.resolver';
@@ -15,7 +14,7 @@ import { TeleCallingResolver } from './tele-calling-entries.resolver';
       { name: TeleCallingEntry.name, schema: TeleCallingEntrySchema },
     ]),
   ],
-  controllers: [TeleCallingEntriesController],
+  controllers: [],
   providers: [
     TeleCallingEntriesRepository,
     TeleCallingEntriesService,

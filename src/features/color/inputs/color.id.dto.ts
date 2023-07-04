@@ -5,7 +5,7 @@ import { IsValidMongooseId } from "src/common/validation-rule-decorators/mongoos
 @InputType()
 export class ColorIdDto {
 
-    @Validate(IsValidMongooseId, ["Color"])
+    @Validate(IsValidMongooseId, ["Color-id"])
     @Field(() => [String])
     colorId: [string];
 
