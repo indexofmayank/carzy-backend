@@ -7,7 +7,7 @@ import {
 } from 'mongoose';
 
 export abstract class EntityRepository<T extends Document> {
-  constructor(protected readonly entityModel: Model<T>) {}
+  constructor(public readonly entityModel: Model<T>) { }
 
   async findOne(
     entityFilterQuery: FilterQuery<T>,
@@ -46,7 +46,7 @@ export abstract class EntityRepository<T extends Document> {
   async findOneAndUpdate(
     entityFilterQuery: FilterQuery<T>,
     updateEntityData: UpdateQuery<unknown>,
-  ): Promise<T | null> { 
+  ): Promise<T | null> {
     return this.entityModel.findOneAndUpdate(
       entityFilterQuery,
       updateEntityData,

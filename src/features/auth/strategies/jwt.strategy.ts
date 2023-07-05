@@ -20,11 +20,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate(userData: any) {
-    const validatedData = this.employeeService.getEmployeeByEmail(
-      userData.userData.username,
+  async validate(userData: any) {
+    const validatedData = await this.employeeService.getEmployeeByEmail(
+      userData.custom_claims.email,
     );
-    this.saveToStore(validatedData);
+    if (validatedData) {
+      this.saveToStore(validatedData);
+    }
     return validatedData;
   }
 

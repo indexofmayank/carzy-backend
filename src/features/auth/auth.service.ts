@@ -4,16 +4,16 @@ import { AuthenticateDto } from './auth.dto';
 import { IAuthenticate, Role } from './auth.interface';
 import { EmployeeService } from '../dealers/employee/services/employee.service';
 import * as bcrypt from 'bcrypt';
+import { DealerHasEmployee } from '../dealers/employee/schemas/employee.schema';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly employeeService: EmployeeService,
-    private readonly jwtService: JwtService,
   ) { }
 
-  async authenticate(authenticateDto: AuthenticateDto): Promise<IAuthenticate> {
-    const authData: IAuthenticate = { token: null };
+  async authenticate(authenticateDto: AuthenticateDto): Promise<DealerHasEmployee | null> {
+    // const authData: IAuthenticate = { token: null };
     const employee = await this.employeeService.getEmployeeByEmail(
       authenticateDto.username,
     );
@@ -23,14 +23,10 @@ export class AuthService {
         employee.password,
       );
       if (isPasswordValid) {
-        const tokenPayload = {
-          custom_claims: { first_name: employee.first_name },
-        };
-        const token = this.jwtService.sign(tokenPayload);
-        authData.token = token;
-        return authData;
+        
+        return employee;
       }
     }
-    return {} as IAuthenticate;
+    return null;
   }
 }
