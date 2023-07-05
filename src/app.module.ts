@@ -37,7 +37,11 @@ import { DealersModule } from './features/dealers/dealers.module';
 import jwtConfig from './config/jwt.config';
 import { JwtStrategy } from './features/auth/strategies/jwt.strategy';
 import { LocalStrategy } from './features/auth/strategies/local.strategy';
+<<<<<<< HEAD
 import { AlsStoreMiddleware } from './shared-modules/als-store/als-store.middleware';
+=======
+import { StudentsModule } from './students/students.module';
+>>>>>>> master
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -81,6 +85,7 @@ import { AlsStoreMiddleware } from './shared-modules/als-store/als-store.middlew
       signOptions: { expiresIn: '1h' },
     }),
     DealersModule,
+    StudentsModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AppResolver, AuthService, JwtStrategy, LocalStrategy],

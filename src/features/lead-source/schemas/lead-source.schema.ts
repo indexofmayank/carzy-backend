@@ -9,15 +9,15 @@ export type LeadSourceSchema = LeadSource & Document;
 @Schema({ timestamps: true })
 export class LeadSource {
   @Prop()
-  @Field()
+  @Field(() => String, {nullable: true})
   name: string;
 
-  @Prop({ type: String, enum: Status, default: Status.INACTIVE })
-  @Field()
+  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
+  @Field(() => Status, {nullable: true})
   status: string;
 
   @Prop()
-  @Field()
+  @Field(() => String, {nullable: true})
   dealer_id: string;
 }
 

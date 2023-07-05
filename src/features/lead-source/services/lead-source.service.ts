@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { LeadSource } from '../schemas/lead-source.schema';
-import { LeadSoucreUpdateDto } from '../dtos/lead-source.update.dto';
 import { LeadSourcesRepository } from '../repositories/lead-source.repository';
+import { LeadSourceIdDto } from '../inputs/lead-source.id.dto';
+import { CreateLeadSourceDto } from '../inputs/create.lead-source.dto';
+import { UpdateLeadSourceDto } from '../inputs/update.lead-source.dto';
+import { UpdateLeadSourceStatusDto } from '../inputs/update.lead-source.status.dto';
 
 @Injectable()
 export class LeadSourceService {
   constructor(private readonly leadSourceRepository: LeadSourcesRepository) {}
 
-  async getleadSourceById(leadSourceObjectId): Promise<LeadSource | any> {
-    return this.leadSourceRepository.findById(leadSourceObjectId);
+  async getleadSourceById(leadSourceIdDto: LeadSourceIdDto): Promise<LeadSource | any> {
+    return this.leadSourceRepository.findById(leadSourceIdDto.leadSourceId);
   }
 
   async getLeadSource(
@@ -19,36 +22,42 @@ export class LeadSourceService {
   }
 
   async createLeadSource(
-    name: string,
-    dealer_id: string,
-  ): Promise<LeadSource | any> {
-    return this.leadSourceRepository.create({
-      name,
-      dealer_id,
-    });
+    createdLeadSourceDto: CreateLeadSourceDto
+    ): Promise<LeadSource | any> {
+    return this.leadSourceRepository.create(createdLeadSourceDto);
   }
 
   async updateLeadSource(
-    leadSourceObjectId: string,
-    updateLeadSourceDto: LeadSoucreUpdateDto,
-  ): Promise<LeadSource> {
+    updateLeadSourceDto: UpdateLeadSourceDto
+    ): Promise<LeadSource> {
     return this.leadSourceRepository.findOneAndUpdate(
-      { _id: leadSourceObjectId },
-      updateLeadSourceDto,
+      { _id: updateLeadSourceDto.leadSourceId },
+      {
+        name: updateLeadSourceDto.name,
+        status: updateLeadSourceDto.status,
+        dealer_id: updateLeadSourceDto.dealer_id
+      },
     );
   }
 
-  async deleteLeadSource(
-    leadSourceObjectId: string,
-  ): Promise<LeadSource | any> {
-    return this.leadSourceRepository.findOneAndDelete({
-      _id: leadSourceObjectId,
-    });
+  async updateLeadSourceStatus(
+    updateLeadSourceStatusDto: UpdateLeadSourceStatusDto
+    ): Promise<LeadSource> {
+    return this.leadSourceRepository.findOneAndUpdate(
+      {_id: updateLeadSourceStatusDto.leadSourceId},
+      {
+        status: updateLeadSourceStatusDto.status
+      },
+    )
   }
 
-  async deleteManyLeadSource(leadSourceObjectIds: [string]): Promise<boolean> {
-    return this.leadSourceRepository.findManyAndDelete({
-      _id: { leadSourceObjectIds },
-    });
+  async deleteLeadSource(
+    leadSourceIdDto: LeadSourceIdDto
+  ): Promise<LeadSource | any> {
+    return this.leadSourceRepository.findOneAndDelete({_id: leadSourceIdDto.leadSourceId});
+  }
+
+  async deleteManyLeadSource(leadSourceIdDto: LeadSourceIdDto): Promise<boolean> {
+    return this.leadSourceRepository.findManyAndDelete({_id: leadSourceIdDto.leadSourceId});
   }
 }

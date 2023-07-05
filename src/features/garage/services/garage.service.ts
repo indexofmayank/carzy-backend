@@ -1,46 +1,55 @@
 import { Injectable } from '@nestjs/common';
 import { Garage } from '../schemas/garage.schema';
 import { GarageRepository } from '../repositories/garage.repository';
-import { UpdateGarageDto } from '../dtos/garage.update.dto';
+import { GarageIdDto } from '../inputs/garage.Id.dto';
+import { CreateGarageDto } from '../inputs/create.garage.dto';
+import { UpdateGarageDto } from '../inputs/update.garage.dto';
+import { UpdateGarageStatusDto } from '../inputs/update.garage.status.dto';
 
 @Injectable()
 export class GarageService {
   constructor(private readonly garageRepository: GarageRepository) {}
 
-  async getGarageById(garageTypeObjectId): Promise<Garage | any> {
-    return this.garageRepository.findById(garageTypeObjectId);
+  async getGarageById(garageIdDto: GarageIdDto): Promise<Garage | any> {
+    return this.garageRepository.findById(garageIdDto.garageId);
   }
 
   async getGarages(resPerPage: number, pageNo: number): Promise<Garage[]> {
     return this.garageRepository.find({}, resPerPage, pageNo);
   }
 
-  async createGarage(name: string, model_id: string): Promise<Garage> {
-    return this.garageRepository.create({
-      name,
-      model_id,
-      created_at: undefined,
-      deleted_at: undefined,
-    });
+  async createGarage(createdGarageDto: CreateGarageDto): Promise<Garage> {
+    return this.garageRepository.create(createdGarageDto);
   }
 
   async updateGarage(
-    garageTypeObjectId: string,
-    updateGarageDto: UpdateGarageDto,
-  ): Promise<Garage> {
+    updateGarageDto: UpdateGarageDto
+    ): Promise<Garage> {
     return this.garageRepository.findOneAndUpdate(
-      { _id: garageTypeObjectId },
-      updateGarageDto,
+      { _id: updateGarageDto.garageId },
+      {
+        name: updateGarageDto.name,
+        model_id: updateGarageDto.model_id,
+        status: updateGarageDto.status
+      },
     );
   }
 
-  async deleteGarage(garageTypeObjectId): Promise<Garage> {
-    return this.garageRepository.findOneAndDelete({ _id: garageTypeObjectId });
+  async updateGarageStatus(updateGarageStatusDto: UpdateGarageStatusDto): Promise<Garage> {
+    return this.garageRepository.findOneAndUpdate(
+      {_id: updateGarageStatusDto.garageId},
+      {status: updateGarageStatusDto.status}
+    )
   }
 
-  async deleteManyGarage(garageTypeObjectIds: [string]): Promise<boolean> {
+
+  async deleteGarage(garageIdDto: GarageIdDto): Promise<Garage> {
+    return this.garageRepository.findOneAndDelete({ _id: garageIdDto.garageId });
+  }
+
+  async deleteManyGarage(garageIdDto: GarageIdDto): Promise<boolean> {
     return this.garageRepository.findManyAndDelete({
-      _id: { garageTypeObjectIds },
+      _id: garageIdDto.garageId
     });
   }
 }

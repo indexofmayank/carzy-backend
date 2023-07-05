@@ -10,27 +10,24 @@ export type CarModelSchema = CarModel & Document;
 @ObjectType()
 @Schema({ timestamps: true })
 export class CarModel {
-  @Field()
-  @Prop()
+
+  @Field(() => String, {nullable: true})
+  @Prop({type: String})
   name: string;
 
-  @Field(() => ID)
+  @Field(() => String, {nullable: true})
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'BodyType' })
   body_type_id: BodyType[];
 
-  @Field(() => ID)
+  @Field(() => String, {nullable: true})
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Brand' })
   brand_id: Brand[];
 
-  @Field()
-  @Prop({ type: String, enum: Status, default: Status.INACTIVE })
+  @Field(() => Status, {nullable: true})
+  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
   status: Status;
 
-  @Field()
-  @Prop()
-  created_by: string;
-
-  @Field()
+  @Field(() => Date, {nullable: true})
   @Prop({ type: Date, default: 0 })
   deleted_at: Date;
 }

@@ -9,19 +9,19 @@ export type GarageSchema = Garage & Document;
 @ObjectType()
 @Schema({ timestamps: true })
 export class Garage {
-  @Field()
+  @Field(() => String)
   @Prop()
   name: string;
 
-  @Field(() => ID)
+  @Field(() => String, {nullable: true})
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'CarModel' })
   model_id: CarModel[];
 
-  @Field()
-  @Prop({ type: String, enum: Status, default: Status.INACTIVE })
+  @Field(() => Status, {nullable: true})
+  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
   status: Status;
 
-  @Field()
+  @Field(() => Date, {nullable: true})
   @Prop({ type: Date, default: 0 })
   deleted_at: Date;
 }

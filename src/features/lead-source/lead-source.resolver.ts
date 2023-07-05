@@ -2,8 +2,10 @@ import { Args, Mutation, Resolver, ID } from '@nestjs/graphql';
 import { LeadSourceService } from './services/lead-source.service';
 import { Query } from '@nestjs/graphql';
 import { LeadSource } from './schemas/lead-source.schema';
-import { LeadSourceCreateDto } from './dtos/lead-source.create.dto';
-import { LeadSoucreUpdateDto } from './dtos/lead-source.update.dto';
+import { LeadSourceIdDto } from './inputs/lead-source.id.dto';
+import { CreateLeadSourceDto } from './inputs/create.lead-source.dto';
+import { UpdateLeadSourceDto } from './inputs/update.lead-source.dto';
+import { UpdateLeadSourceStatusDto } from './inputs/update.lead-source.status.dto';
 
 @Resolver()
 export class LeadSourceResolver {
@@ -11,45 +13,42 @@ export class LeadSourceResolver {
 
   @Query(() => [LeadSource], { name: 'listLeadSource', nullable: true })
   list(): Promise<LeadSource[]> {
-    return this.leadSourcesService.getLeadSource(3, 1);
+    return this.leadSourcesService.getLeadSource(10, 1);
   }
 
   @Query(() => LeadSource, { name: 'getLeadSourceDetail', nullable: true })
   getLeadSourceDetail(
-    @Args({ name: 'leadSourceObjectId', type: () => ID })
-    leadSourceObjectId: string,
+    @Args('leadSourceIdDto') leadSourceIdDto: LeadSourceIdDto
   ): Promise<LeadSource | any> {
-    return this.leadSourcesService.getleadSourceById(leadSourceObjectId);
+    return this.leadSourcesService.getleadSourceById(leadSourceIdDto);
   }
 
   @Mutation(() => LeadSource, { name: 'addLeadSource', nullable: true })
   addLeadSource(
-    @Args('addLeadSourceDto') addLeadSourceDto: LeadSoucreUpdateDto,
+    @Args('addLeadSourceDto') addLeadSourceDto: CreateLeadSourceDto,
   ): Promise<LeadSource | any> {
-    return this.leadSourcesService.createLeadSource(
-      addLeadSourceDto.name,
-      addLeadSourceDto.dealer_id,
-    );
+    return this.leadSourcesService.createLeadSource(addLeadSourceDto);
   }
 
   @Mutation(() => LeadSource, { name: 'updateLeadSource', nullable: true })
   updateLeadSource(
-    @Args('updateLeadSourceDto') updateLeadSourceDto: LeadSoucreUpdateDto,
-    @Args({ name: 'leadSourceObjectId', type: () => ID })
-    leadSourceObjectId: string,
+    @Args('updateLeadSourceDto') updateLeadSourceDto: UpdateLeadSourceDto,
   ): Promise<LeadSource | any> {
-    return this.leadSourcesService.updateLeadSource(
-      leadSourceObjectId,
-      updateLeadSourceDto,
-    );
+    return this.leadSourcesService.updateLeadSource(updateLeadSourceDto);
+  }
+
+  @Mutation(() => LeadSource, {name: 'updateLeadSourceStatus', nullable: true})
+  updateLeadSourceStatus(
+    @Args('updateLeadSourceStatusDto') updateLeadSourceStatusDto: UpdateLeadSourceStatusDto
+  ): Promise<LeadSource> {
+    return this.leadSourcesService.updateLeadSourceStatus(updateLeadSourceStatusDto)
   }
 
   @Mutation(() => LeadSource, { name: 'deleteLeadSource', nullable: true })
   deleteLeadSource(
-    @Args({ name: 'leadSourceObectId', type: () => ID })
-    leadSourceObjectId: string,
-  ): Promise<LeadSource | any> {
-    return this.leadSourcesService.deleteLeadSource(leadSourceObjectId);
+    @Args('leadSourceIdDto') leadSourceIdDto: LeadSourceIdDto
+    ): Promise<LeadSource | any> {
+    return this.leadSourcesService.deleteLeadSource(leadSourceIdDto);
   }
 
   @Mutation(() => [LeadSource], {
@@ -57,9 +56,8 @@ export class LeadSourceResolver {
     nullable: true,
   })
   deleteManyLeadSource(
-    @Args({ name: 'leadSourceObjectIds', type: () => [ID] })
-    leadSourceObjectIds: [string],
-  ): Promise<boolean | any> {
-    return this.leadSourcesService.deleteManyLeadSource(leadSourceObjectIds);
+    @Args('leadSourceIdDto') leadSourceIdDto: LeadSourceIdDto
+    ): Promise<boolean | any> {
+    return this.leadSourcesService.deleteManyLeadSource(leadSourceIdDto);
   }
 }

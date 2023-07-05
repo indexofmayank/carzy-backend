@@ -6,14 +6,15 @@ import { UpdateBodyTypeDto } from '../inputs/update.body-type.dto';
 import { CreateBodyTypeDto } from '../inputs/create.body-type.dto';
 import { UpdateBodyTypeStatusDto } from '../inputs/update.body-type.status.dto';
 import { Status } from 'src/status.enums';
-import { DeleteBodyTypeDto } from '../inputs/delete.body-type.dto';
+import { BodyTypeIdDto } from '../inputs/body-type.id.dto';
+import { UpdateBrandStatusDto } from 'src/features/brand/inputs/update.brand.status.dto';
 
 @Injectable()
 export class BodyTypeService {
   constructor(private readonly bodyTypeRepository: BodyTypeRepository) {}
 
-  async getBodyTypeById(bodyTypeObjectId): Promise<BodyType | any> {
-    return this.bodyTypeRepository.findById(bodyTypeObjectId);
+  async getBodyTypeById(bodyTypeIdDto: BodyTypeIdDto): Promise<BodyType | any> {
+    return this.bodyTypeRepository.findById(bodyTypeIdDto.bodyTypeId);
   }
 
   async getBodyTypes(resPerPage: number, pageNo: number): Promise<BodyType[]> {
@@ -27,33 +28,32 @@ export class BodyTypeService {
   }
 
   async updateBodyType(
-    bodyTypeObjectId: string,
-    updateBodyTypeDto: UpdateBodyTypeDto,
+   updateBodyTypeDto: UpdateBodyTypeDto
   ): Promise<BodyType> {
     return this.bodyTypeRepository.findOneAndUpdate(
-      { _id: bodyTypeObjectId },
-      updateBodyTypeDto,
+      { _id: updateBodyTypeDto.bodyTypeId },
+      {name: updateBodyTypeDto.name,
+        status: updateBodyTypeDto.status},
     );
   }
 
   async updateBodyTypeStatus(
-    bodyTypeId: string,
-    status: string
+    updateBodyTypeStatusDto: UpdateBodyTypeStatusDto
   ): Promise<BodyType> {
     return this.bodyTypeRepository.findOneAndUpdate(
-      {_id: bodyTypeId},
-      {status: status}
+      {_id: updateBodyTypeStatusDto.bodyTypeId },
+     {name: updateBodyTypeStatusDto.status},
     )
   }
 
 
-  async deleteBodyType(deleteBodyTypeDto: DeleteBodyTypeDto): Promise<any> {
-    return this.bodyTypeRepository.findOneAndDelete({ _id: deleteBodyTypeDto.bodyTypeId });
+  async deleteBodyType(bodyTypeIdDto: BodyTypeIdDto ): Promise<any> {
+    return this.bodyTypeRepository.findOneAndDelete({ _id: bodyTypeIdDto.bodyTypeId });
   }
 
-  async deleteManyBodyType(deleteManyBodyTypeDto: DeleteBodyTypeDto): Promise<boolean> {
+  async deleteManyBodyType(bodyTypeIdDto: BodyTypeIdDto): Promise<boolean> {
     return this.bodyTypeRepository.findManyAndDelete({
-      _id:  deleteManyBodyTypeDto.bodyTypeId
+      _id:  bodyTypeIdDto.bodyTypeId
     });
   }
 }

@@ -3,6 +3,8 @@ import { Brand } from './schemas/brand.schema';
 import { BrandsService } from './services/brands.service';
 import { CreateBrandDto } from './inputs/create.brand.dto';
 import { UpdateBrandDto } from './inputs/update.brand.dto';
+import { UpdateBrandStatusDto } from './inputs/update.brand.status.dto';
+import { BrandIdDto } from './inputs/brand.id.input.dto';
 
 @Resolver()
 export class BrandsResolver {
@@ -10,14 +12,14 @@ export class BrandsResolver {
 
   @Query(() => [Brand], { name: 'listBrand', nullable: true })
   listAll(): Promise<Brand[]> {
-    return this.brandService.getBrands(3, 1);
+    return this.brandService.getBrands(10, 1);
   }
 
   @Query(() => Brand, { name: 'getBrandDetail', nullable: true })
   getBrandDetail(
-    @Args({ name: 'brandId', type: () => ID }) id: string,
-  ): Promise<Brand> {
-    return this.brandService.getBrandById(id);
+      @Args('brandIdDto') brandIdDto: BrandIdDto
+    ): Promise<Brand> {
+    return this.brandService.getBrandById(brandIdDto);
   }
 
   @Mutation(() => Brand, { name: 'addBrand' })
@@ -27,23 +29,29 @@ export class BrandsResolver {
 
   @Mutation(() => Brand, { name: 'updateBrand' })
   updateBrand(
-    @Args('updateBrandDto') updateBrandDto: UpdateBrandDto,
-    @Args({ name: 'brandId', type: () => ID }) id: string,
+      @Args('updateBrandDto') updateBrandDto: UpdateBrandDto 
+    ): Promise<Brand> {
+    return this.brandService.updateBrandService(updateBrandDto);
+  }
+
+  @Mutation(() => Brand, {name: 'updateBrandStatus'})
+  updateBrandStatus(
+    @Args('updateBrandStatusDto') updateBrandStatusDto: UpdateBrandStatusDto
   ): Promise<Brand> {
-    return this.brandService.updateBrandService(id, updateBrandDto);
+    return this.brandService.updateBrandStatus(updateBrandStatusDto)
   }
 
   @Mutation(() => Brand, { name: 'deleteBrand' })
   deleteBrand(
-    @Args({ name: 'brandId', type: () => ID }) id: string,
-  ): Promise<string> {
-    return this.brandService.deleteBrand(id);
+    @Args('brandIdDto') brandIdDto: BrandIdDto
+    ): Promise<string> {
+    return this.brandService.deleteBrand(brandIdDto);
   }
 
   @Mutation(() => Brand, { name: 'deleteManyBrands' })
   deleteManyBrand(
-    @Args({ name: 'brandIds', type: () => [ID] }) ids: [string],
-  ): Promise<boolean> {
-    return this.brandService.deleteManyBrand(ids);
+    @Args('brandIdDto') brandIdDto: BrandIdDto
+    ): Promise<boolean> {
+    return this.brandService.deleteManyBrand(brandIdDto);
   }
 }

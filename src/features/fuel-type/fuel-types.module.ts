@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { FuelType, FuelTypeSchema } from './schemas/fuel-type.schema';
 import { FuelTypeRepository } from './repositories/fuel-type.repository';
 import { FuelTypeService } from './services/fuel-type.services';
-import { FuelTypeController } from './fuel-types.controller';
 import { FuelTypeResolver } from './fuel-types.resolver';
 
 @Module({
@@ -12,7 +11,7 @@ import { FuelTypeResolver } from './fuel-types.resolver';
       { name: FuelType.name, schema: FuelTypeSchema },
     ]),
   ],
-  controllers: [FuelTypeController],
+  controllers: [],
   providers: [FuelTypeRepository, FuelTypeService, FuelTypeResolver],
 })
 export class FuelTypesModule {}

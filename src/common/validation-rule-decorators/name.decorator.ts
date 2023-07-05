@@ -4,13 +4,13 @@ import {
   ValidationArguments,
 } from 'class-validator';
 
-@ValidatorConstraint({ name: 'customText', async: false })
+@ValidatorConstraint({ name: 'customTName', async: false })
 export class IsValidName implements ValidatorConstraintInterface {
   validate(text: string, args: ValidationArguments) {
     if (!text) {
       return false;
     }
-    return text.length >= 3 && text.length < 20;
+    return text.length >= 2 && text.length < 100;
   }
 
   defaultMessage(args: ValidationArguments) {

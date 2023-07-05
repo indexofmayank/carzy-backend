@@ -1,8 +1,10 @@
 import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
 import { CarModelService } from './services/car-models.service';
 import { CarModel } from './schemas/car-model.schema';
-import { CreateCarModelDto } from './dtos/car-model.create.dto';
-import { UpdateCarModelDto } from './dtos/car-model.update.dto';
+import { UpdateCarModelDto } from './inputs/update.car-model.dto';
+import { CreateCarModelDto } from './inputs/create.car-model.dto';
+import { CarModelIdDto } from './inputs/car-model.id.dto';
+import { UpdateCarModelStatusDto } from './inputs/update.car-model.status.dto';
 
 @Resolver()
 export class CarModelResolver {
@@ -25,32 +27,35 @@ export class CarModelResolver {
     @Args('addCarModelDto') addCarModelDto: CreateCarModelDto,
   ): Promise<CarModel> {
     return this.carModelService.createCarModel(
-      addCarModelDto.name,
-      addCarModelDto.created_by,
-      addCarModelDto.body_type_id,
-      addCarModelDto.brand_id,
+      addCarModelDto
     );
   }
 
   @Mutation(() => CarModel, { name: 'updateCarModel' })
   async updateCarModel(
-    @Args('updateCarModelDto') updateCarModelDto: UpdateCarModelDto,
-    @Args({ name: 'carModelId', type: () => ID }) id: string,
+    @Args('updateCarModelDto') updateCarModelDto: UpdateCarModelDto
+    ): Promise<CarModel> {
+    return this.carModelService.updateCarModel(updateCarModelDto);
+  }
+
+  @Mutation(() => CarModel, {name: 'updateCarModelStatus'})
+  async updateCarModelStatus(
+    @Args('updateCarModelStatusDto') updateCarModelStatusDto: UpdateCarModelStatusDto
   ): Promise<CarModel> {
-    return this.carModelService.updateCarModel(id, updateCarModelDto);
+    return this.carModelService.updateCarModelStatus(updateCarModelStatusDto)
   }
 
   @Mutation(() => CarModel, { name: 'deleteCarModel' })
   deleteCarModel(
-    @Args({ name: 'carModelId', type: () => ID }) id: string,
-  ): Promise<CarModel | any> {
-    return this.carModelService.deleteSingleCarModel(id);
+      @Args('carModelIdDto') carModelIdDto: CarModelIdDto
+    ): Promise<CarModel | any> {
+    return this.carModelService.deleteSingleCarModel(carModelIdDto);
   }
 
   @Mutation(() => CarModel, { name: 'deleteManyCarModel' })
   deleteManyCarModel(
-    @Args({ name: 'carModelIds', type: () => [ID] }) ids: [string],
-  ): Promise<boolean> {
-    return this.carModelService.deleteManyCarModel(ids);
+    @Args('carModelIdDto') carModelIdDto: CarModelIdDto
+    ): Promise<boolean> {
+    return this.carModelService.deleteManyCarModel(carModelIdDto);
   }
 }

@@ -19,12 +19,6 @@ export class Brand {
   @Field(() => Date, { nullable: true })
   @Prop({ type: Date, default: 0 })
   deleted_at: Date;
-
-  @Field(() => Date, { nullable: true })
-  created_at: Date;
-
-  @Field(() => Date, { nullable: true })
-  updated_at: Date;
 }
 
 export const BrandSchema = SchemaFactory.createForClass(Brand);

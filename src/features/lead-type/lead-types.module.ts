@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LeadTypeSchema, LeadTypes } from './schemas/lead-types.schema';
-import { LeadTypesController } from './lead-types.controller';
 import { LeadTypesService } from './services/lead-types.service';
 import { LeadTypesResolver } from './lead-types.resolver';
 import { LeadTypeRepository } from './repositories/lead-type.repository';
@@ -12,7 +11,7 @@ import { LeadTypeRepository } from './repositories/lead-type.repository';
       { name: LeadTypes.name, schema: LeadTypeSchema },
     ]),
   ],
-  controllers: [LeadTypesController],
+  controllers: [],
   providers: [LeadTypeRepository, LeadTypesService, LeadTypesResolver],
 })
 export class LeadTypeModule {}

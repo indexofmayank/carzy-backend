@@ -1,8 +1,10 @@
 import { Resolver, Query, Args, Mutation, ID } from '@nestjs/graphql';
 import { MakeYearService } from './services/make-year.service';
 import { MakeYear } from './schemas/make-year.schema';
-import { CreateMakeYearDto } from './dtos/make-year.create.dto';
-import { UpdateMakeYearDto } from './dtos/make-year.update.dto';
+import { MakeYearIdDto } from './inputs/make-year.id.dto';
+import { CreateMakeYearDto } from './inputs/create.make-year.dto';
+import { UpdateMakeYearDto } from './inputs/update.make-year.dto';
+import { UpdateMakeyearStatusDto } from './inputs/update.make-year.status.dto';
 
 @Resolver()
 export class MakeYearResolver {
@@ -10,40 +12,48 @@ export class MakeYearResolver {
 
   @Query(() => [MakeYear], { name: 'listYear', nullable: true })
   list(): Promise<MakeYear[]> {
-    return this.makeYearService.getYears(3, 1);
+    return this.makeYearService.getYears(10, 1);
   }
 
   @Query(() => MakeYear, { name: 'getYeadDetail' })
-  getMakeYearDetail(@Args('yearId') yearId: string): Promise<MakeYear> {
-    return this.makeYearService.getYearById(yearId);
+  getMakeYearDetail(
+    @Args('makeYearIdDto') makeYearIdDto: MakeYearIdDto
+  ): Promise<MakeYear> {
+    return this.makeYearService.getYearById(makeYearIdDto);
   }
 
   @Mutation(() => MakeYear, { name: 'addYear' })
   addYear(
-    @Args('addYearDto') addYearDto: CreateMakeYearDto,
+    @Args('addMakeYearDto') addMakeYearDto: CreateMakeYearDto
+    ): Promise<MakeYear> {
+    return this.makeYearService.createYear(addMakeYearDto);
+  }
+
+  @Mutation(() => MakeYear, {name: 'updateYearStatus'})
+  updateYearStatus(
+    @Args('updateMakeYearStatusDto') updateMakeYearStatusDto: UpdateMakeyearStatusDto 
   ): Promise<MakeYear> {
-    return this.makeYearService.createYear(addYearDto.year);
+    return this.makeYearService.updateYearStatus(updateMakeYearStatusDto)
   }
 
   @Mutation(() => MakeYear, { name: 'updateYear', nullable: true })
   updateYear(
-    @Args('updateYearDto') updateYearDto: UpdateMakeYearDto,
-    @Args({ name: 'yearId', type: () => ID }) id: string,
-  ): Promise<MakeYear> {
-    return this.makeYearService.updateYear(id, updateYearDto);
+    @Args('updateMakeYearDto') updateMakeYearDto: UpdateMakeYearDto
+    ): Promise<MakeYear> {
+    return this.makeYearService.updateYear(updateMakeYearDto);
   }
 
   @Mutation(() => [MakeYear], { name: 'deleteYear' })
   deleteYear(
-    @Args({ name: 'YearId', type: () => ID }) id: string,
-  ): Promise<MakeYear | any> {
-    return this.makeYearService.deleteYear(id);
+    @Args('makeYearIdDto') makeYearIdDto: MakeYearIdDto
+    ): Promise<MakeYear | any> {
+    return this.makeYearService.deleteYear(makeYearIdDto);
   }
 
   @Mutation(() => [MakeYear], { name: 'deleteManyYears' })
   deleteManyYears(
-    @Args({ name: 'yearIds', type: () => [ID] }) ids: [string],
-  ): Promise<boolean> {
-    return this.makeYearService.deleteManyYear(ids);
+    @Args('makeYearIdDto') makeYearIdDto: MakeYearIdDto
+    ): Promise<boolean> {
+    return this.makeYearService.deleteManyYear(makeYearIdDto);
   }
 }

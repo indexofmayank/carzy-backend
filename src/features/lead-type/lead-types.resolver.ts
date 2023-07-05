@@ -1,8 +1,10 @@
 import { Resolver, Args, Query, Mutation, ID } from '@nestjs/graphql';
 import { LeadTypes } from './schemas/lead-types.schema';
 import { LeadTypesService } from './services/lead-types.service';
-import { LeadTypeCreateDto } from './dtos/lead-types.create.dto';
-import { LeadTypeUpdateDto } from './dtos/lead-types.update.dto';
+import { CreateLeadTypeDto } from './inputs/create.lead-type.dto';
+import { LeadTypeIdDto } from './inputs/lead-type.id.dto';
+import { UpdateLeadTypeDto } from './inputs/update.lear-type.dto';
+import { UpdateLeadTypeStatusDto } from './inputs/update.lead-type.status.dto';
 
 @Resolver()
 export class LeadTypesResolver {
@@ -10,45 +12,50 @@ export class LeadTypesResolver {
 
   @Query(() => [LeadTypes], { name: 'listLeadType', nullable: true })
   list(): Promise<LeadTypes | any> {
-    return this.leadTypesServic.getLeadTypes(3, 1);
+    return this.leadTypesServic.getLeadTypes(10, 1);
   }
 
   @Query(() => LeadTypes, { name: 'getLeadTypeDetail', nullable: true })
   getLeadTypeDetail(
-    @Args({ name: 'leadTypeId', type: () => ID }) id: string,
-  ): Promise<LeadTypes> {
-    return this.leadTypesServic.getLeadTypesById(id);
+    @Args('leadTypeIdDto') leadTypeIdDto: LeadTypeIdDto
+    ): Promise<LeadTypes> {
+    return this.leadTypesServic.getLeadTypesById(leadTypeIdDto);
   }
 
-  @Mutation(() => LeadTypes, { name: 'addLeadTypes', nullable: true })
-  addLeadTypes(
-    @Args('createLeadTypeDto') createLeadTypeDto: LeadTypeCreateDto,
+  @Mutation(() => LeadTypes, { name: 'addLeadType', nullable: true })
+  addLeadType(
+    @Args('addLeadTypeDto') addLeadTypeDto: CreateLeadTypeDto
   ): Promise<LeadTypes | any> {
     return this.leadTypesServic.createLeadType(
-      createLeadTypeDto.name,
-      createLeadTypeDto.dealer_id,
+     addLeadTypeDto
     );
   }
 
-  @Mutation(() => LeadTypes, { name: 'updateLeadTypes', nullable: true })
+  @Mutation(() => LeadTypes, { name: 'updateLeadType', nullable: true })
   updateLeadTypes(
-    @Args({ name: 'leadTypeId', type: () => ID }) leadTypeId: string,
-    @Args('updateLeadTypeDto') updateLeadTypeDto: LeadTypeUpdateDto,
-  ): Promise<LeadTypes | any> {
-    return this.leadTypesServic.updateLeadType(leadTypeId, updateLeadTypeDto);
+    @Args('updateLeadTypeDto') updateLeadTypeDto: UpdateLeadTypeDto
+    ): Promise<LeadTypes | any> {
+    return this.leadTypesServic.updateLeadType(updateLeadTypeDto);
   }
 
-  @Mutation(() => LeadTypes, { name: 'deleteLeadTypes', nullable: true })
-  deleteSingleLeadType(
-    @Args({ name: 'leadTypeId', type: () => ID }) id: string,
+  @Mutation(() => LeadTypes, {name: 'updateLeadTypeStatus', nullable: true})
+  updateLeadTypeStatus(
+    @Args('updateLeadTypeStatusDto') updateLeadTypeStatusDto: UpdateLeadTypeStatusDto
   ): Promise<LeadTypes | any> {
-    return this.leadTypesServic.deleteSingleLeadType(id);
+    return this.leadTypesServic.updateLeadTypeStatus(updateLeadTypeStatusDto)
   }
 
-  @Mutation(() => LeadTypes, { name: 'deleteManyLeadTypes', nullable: true })
-  deleteManyLeadTypes(
-    @Args({ name: 'leadTypesIds', type: () => [ID] }) ids: [string],
-  ): Promise<LeadTypes | boolean> {
-    return this.leadTypesServic.deleteManyLeadType(ids);
+  @Mutation(() => LeadTypes, { name: 'deleteLeadType', nullable: true })
+  deleteLeadType(
+    @Args('leadTypeIdDto') leadTypeIdDto: LeadTypeIdDto
+    ): Promise<LeadTypes | any> {
+    return this.leadTypesServic.deleteSingleLeadType(leadTypeIdDto);
+  }
+
+  @Mutation(() => LeadTypes, { name: 'deleteManyLeadType', nullable: true })
+  deleteManyLeadType(
+    @Args('leadTypeIdDto') leadTypeIdDto: LeadTypeIdDto
+    ): Promise<LeadTypes | boolean> {
+    return this.leadTypesServic.deleteManyLeadType(leadTypeIdDto);
   }
 }
