@@ -8,7 +8,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export enum Status {
+export enum EntityStatus {
     ACTIVE = "ACTIVE",
     INACTIVE = "INACTIVE",
     DELETED = "DELETED"
@@ -52,57 +52,57 @@ export interface LeadTypeIdDto {
 
 export interface CreateBrandDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
 export interface UpdateBrandDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
     brandId?: Nullable<string[]>;
 }
 
 export interface UpdateBrandStatusDto {
-    status: Status;
+    status: EntityStatus;
     brandId: string[];
 }
 
 export interface CreateBodyTypeDto {
     name: string;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
 export interface UpdateBodyTypeDto {
     name: string;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
     bodyTypeId: string;
 }
 
 export interface UpdateBodyTypeStatusDto {
-    status: Status;
+    status: EntityStatus;
     bodyTypeId: string;
 }
 
 export interface CreateCarModelDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     body_type_id?: Nullable<string>;
     brand_id?: Nullable<string>;
 }
 
 export interface UpdateCarModelDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     body_type_id?: Nullable<string>;
     brand_id?: Nullable<string>;
     carModelId: string;
 }
 
 export interface UpdateCarModelStatusDto {
-    status: Status;
+    status: EntityStatus;
     carModelId: string[];
 }
 
@@ -112,33 +112,33 @@ export interface CarModelIdDto {
 
 export interface CreateColorDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
 }
 
 export interface UpdateColorDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     colorId: string[];
 }
 
 export interface UpdateColorStatusDto {
-    status: Status;
+    status: EntityStatus;
     colorId: string[];
 }
 
 export interface CreateFuelTypeDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
 }
 
 export interface UpdateFuelTypeDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     fuelTypeId: string[];
 }
 
 export interface UpdateFuelTypeStatusDto {
-    status: Status;
+    status: EntityStatus;
     fuelTypeId: string[];
 }
 
@@ -148,7 +148,7 @@ export interface CreateMakeYearDto {
 }
 
 export interface UpdateMakeyearStatusDto {
-    status: Status;
+    status: EntityStatus;
     makeYearId: string[];
 }
 
@@ -160,37 +160,37 @@ export interface UpdateMakeYearDto {
 
 export interface CreateCarVariantDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     model_id?: Nullable<string>;
 }
 
 export interface UpdateCarVariantDto {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     model_id?: Nullable<string>;
     carVariantId: string;
 }
 
 export interface UpdateCarVariantStatusDto {
-    status: Status;
+    status: EntityStatus;
     carVariantId: string[];
 }
 
 export interface CreateGarageDto {
     name: string;
     model_id: string[];
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
 }
 
 export interface UpdateGarageDto {
     name: string;
     model_id: string[];
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     garageId: string[];
 }
 
 export interface UpdateGarageStatusDto {
-    status: Status;
+    status: EntityStatus;
     garageId: string[];
 }
 
@@ -216,20 +216,23 @@ export interface UpdateSellerDetailDto {
     dob: string;
 }
 
-export interface DealerCreateDto {
+export interface CreateDealerInput {
     name: string;
     address: string;
-    status: string;
+    password: string;
+    confirm_password: string;
     email: string;
     phone: string;
 }
 
-export interface DealerUpdateDto {
+export interface UpdateDealerInput {
     name: string;
     address: string;
-    status: string;
+    password: string;
+    confirm_password: string;
     email: string;
     phone: string;
+    id: string;
 }
 
 export interface CreateEmployeeInput {
@@ -255,7 +258,7 @@ export interface BuyerInputDto {
     referral: string;
     email: string;
     status: string;
-    dealer_id: string;
+    dealer: string;
     dob: string;
     doa: string;
     spouse_details: SpouseDetailInputDto;
@@ -280,7 +283,7 @@ export interface SpouseDetailInputDto {
 export interface CallTypeCreateDto {
     name: string;
     status: string;
-    dealer_id: string;
+    dealer: string;
 }
 
 export interface BuyerHasPurchaseDetailCreate {
@@ -331,49 +334,49 @@ export interface TeleCallingEntryUpdate {
 
 export interface CreateLeadSourceDto {
     name: string;
-    status?: Nullable<Status>;
-    dealer_id?: Nullable<string[]>;
+    status?: Nullable<EntityStatus>;
+    dealer?: Nullable<string[]>;
 }
 
 export interface UpdateLeadSourceDto {
     name: string;
-    status?: Nullable<Status>;
-    dealer_id?: Nullable<string[]>;
+    status?: Nullable<EntityStatus>;
+    dealer?: Nullable<string[]>;
     leadSourceId: string[];
 }
 
 export interface UpdateLeadSourceStatusDto {
-    status: Status;
+    status: EntityStatus;
     leadSourceId: string[];
 }
 
 export interface CreateLeadTypeDto {
     name: string;
-    status?: Nullable<Status>;
-    dealer_id?: Nullable<string>;
+    status?: Nullable<EntityStatus>;
+    dealer?: Nullable<string>;
 }
 
 export interface UpdateLeadTypeDto {
     name: string;
-    status?: Nullable<Status>;
-    dealer_id?: Nullable<string>;
+    status?: Nullable<EntityStatus>;
+    dealer?: Nullable<string>;
     leadTypeId: string[];
 }
 
 export interface UpdateLeadTypeStatusDto {
     leadTypeId: string[];
-    status: Status;
+    status: EntityStatus;
 }
 
 export interface Brand {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
 export interface BodyType {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
@@ -381,31 +384,31 @@ export interface CarModel {
     name?: Nullable<string>;
     body_type_id?: Nullable<string>;
     brand_id?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
 export interface Color {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
 export interface FuelType {
     name: string;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
 export interface MakeYear {
     year: number;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
 export interface CarVariant {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     model_id?: Nullable<string>;
     deleted_at?: Nullable<DateTime>;
 }
@@ -413,7 +416,7 @@ export interface CarVariant {
 export interface Garage {
     name: string;
     model_id?: Nullable<string>;
-    status?: Nullable<Status>;
+    status?: Nullable<EntityStatus>;
     deleted_at?: Nullable<DateTime>;
 }
 
@@ -435,7 +438,6 @@ export interface Dealer {
     status: string;
     email: string;
     phone: string;
-    deleted_at: DateTime;
 }
 
 export interface DealerHasEmployee {
@@ -445,9 +447,7 @@ export interface DealerHasEmployee {
     status: string;
     phone: number;
     email: string;
-    dealer_id: Dealer;
-    password: string;
-    deleted_at: DateTime;
+    dealer: Dealer;
 }
 
 export interface AddressOutputDto {
@@ -473,7 +473,7 @@ export interface BuyerOutputDto {
     referral: string;
     email: string;
     status: string;
-    dealer_id: string;
+    dealer: string;
     dob: string;
     doa: string;
     spouse_details: SpouseDetailOutputDto;
@@ -482,7 +482,7 @@ export interface BuyerOutputDto {
 export interface CallType {
     name: string;
     status: string;
-    dealer_id: string;
+    dealer: string;
     deleted_at: DateTime;
 }
 
@@ -499,12 +499,12 @@ export interface BuyerHasPurchaseDetail {
 }
 
 export interface TeleCallingEntry {
-    buyer_id: string;
-    visited_next_date: string;
-    next_visit_date: string;
-    finance_required: boolean;
+    buyer_id?: Nullable<string>;
+    visited_next_date?: Nullable<DateTime>;
+    next_visit_date?: Nullable<DateTime>;
+    finance_required?: Nullable<boolean>;
     remarks: string;
-    next_call_date: string;
+    next_call_date: DateTime;
     created_by: string;
     specail_instruction: string;
     deleted_at: DateTime;
@@ -512,14 +512,14 @@ export interface TeleCallingEntry {
 
 export interface LeadSource {
     name?: Nullable<string>;
-    status?: Nullable<Status>;
-    dealer_id?: Nullable<string>;
+    status?: Nullable<EntityStatus>;
+    dealer?: Nullable<string>;
 }
 
 export interface LeadTypes {
     name: string;
-    status?: Nullable<Status>;
-    dealer_id?: Nullable<string>;
+    status?: Nullable<EntityStatus>;
+    dealer?: Nullable<string>;
     deleted_at?: Nullable<DateTime>;
 }
 
@@ -606,11 +606,11 @@ export interface IMutation {
     updateSeller(updateSellerDto: UpdateSellerDetailDto, sellerId: string): SellerDetail | Promise<SellerDetail>;
     deleteSeller(SellerID: string): SellerDetail[] | Promise<SellerDetail[]>;
     deleteManySeller(SellerID: string[]): SellerDetail[] | Promise<SellerDetail[]>;
-    addDealer(createDealerDto: DealerCreateDto): Nullable<Dealer> | Promise<Nullable<Dealer>>;
-    updateDealer(updateDealerId: DealerUpdateDto, dealerId: string): Nullable<Dealer> | Promise<Nullable<Dealer>>;
+    createDealer(createDealerInput: CreateDealerInput): Dealer | Promise<Dealer>;
+    updateDealer(updateDealer: UpdateDealerInput): Dealer | Promise<Dealer>;
     deleteDealer(dealerId?: Nullable<string>): Nullable<Dealer> | Promise<Nullable<Dealer>>;
     deleteManyDealer(dealerIds: string[]): Nullable<Dealer> | Promise<Nullable<Dealer>>;
-    addDealerHasEmployee(addDealerHasEmployeeDto: CreateEmployeeInput): Nullable<DealerHasEmployee> | Promise<Nullable<DealerHasEmployee>>;
+    createEmployee(createEmployeeInput: CreateEmployeeInput): DealerHasEmployee | Promise<DealerHasEmployee>;
     updateDealerHasEmployee(employeeId: string, updateDealerHasEmployeeDto: UpdateEmployeeInput): Nullable<DealerHasEmployee> | Promise<Nullable<DealerHasEmployee>>;
     deleteDealerHasEmployee(employeeId?: Nullable<string>): Nullable<DealerHasEmployee> | Promise<Nullable<DealerHasEmployee>>;
     deleteManyDealerHasEmployee(employeeIds: string[]): Nullable<DealerHasEmployee> | Promise<Nullable<DealerHasEmployee>>;

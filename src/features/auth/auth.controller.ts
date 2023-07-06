@@ -6,12 +6,12 @@ import {
   Request,
   Response,
   UseGuards,
-} from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthenticateDto } from './auth.dto';
-import { LocalAuthGuard } from './guards/local.auth.guard';
+} from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { AuthenticateDto } from "./auth.dto";
+import { LocalAuthGuard } from "./guards/local.auth.guard";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 

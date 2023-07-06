@@ -1,50 +1,52 @@
-import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
-import { Field, ObjectType } from '@nestjs/graphql';
-import { Status } from 'src/status.enums';
-import { Document, Types } from 'mongoose';
-import { Dealer } from '../../Schemas/dealer.schema';
-import { Type } from 'class-transformer';
+import { SchemaFactory, Prop } from "@nestjs/mongoose";
+import { Field, ObjectType } from "@nestjs/graphql";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
+import { Document, Types, Schema } from "mongoose";
+import { Dealer } from "../../Schemas/dealer.schema";
+import encryptPasswordHook from "../mongoose-hooks/encrypt-password.hook";
+import { DefaultSchema } from "src/common/decorators/mongoose/default-schema.decorator";
+import { PropRequired } from "src/common/decorators/mongoose/prop-required.decorator";
 
 export type EmployeeSchema = DealerHasEmployee & Document;
 
 @ObjectType()
-@Schema({ timestamps: true })
+@DefaultSchema({ collection: "dealer_has_employees" })
 export class DealerHasEmployee {
 
   @Field(() => String)
   _id: Types.ObjectId;
 
   @Field()
-  @Prop()
+  @PropRequired()
   first_name: string;
 
   @Field()
-  @Prop()
+  @PropRequired()
   last_name: string;
 
   @Field()
-  @Prop()
-  status: Status;
+  @Prop({ enum: EntityStatus, default: EntityStatus.ACTIVE }) // active,inactive
+  status: EntityStatus;
 
   @Field()
-  @Prop()
+  @PropRequired()
   phone: number;
 
   @Field()
-  @Prop()
+  @PropRequired()
   email: string;
 
   @Field()
-  @Prop({ ref: Dealer.name, type: Types.ObjectId })
-  dealer_id: Dealer;
+  @PropRequired({ ref: Dealer.name, type: Schema.Types.ObjectId })
+  dealer: Dealer;
 
-  @Field()
-  @Prop()
+  @PropRequired()
   password: string;
 
-  @Field()
   @Prop({ type: Date, default: null })
   deleted_at: Date;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(DealerHasEmployee);
+
+EmployeeSchema.pre("save", encryptPasswordHook.call());

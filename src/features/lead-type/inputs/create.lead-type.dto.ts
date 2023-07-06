@@ -3,7 +3,7 @@ import { Validate } from "class-validator";
 import { IsValidMongooseId } from "src/common/validation-rule-decorators/mongoose.id.decorator";
 import { IsValidName } from "src/common/validation-rule-decorators/name.decorator";
 import { IsValidEnum } from "src/common/validation-rule-decorators/validEnum.decorator";
-import { Status } from "src/status.enums";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
 
 
 @InputType()
@@ -14,11 +14,11 @@ export class CreateLeadTypeDto {
     name: string;
 
     @Validate(IsValidEnum, ["lead-type"])
-    @Field(() => Status, {nullable: true})
+    @Field(() => EntityStatus, { nullable: true })
     status: string;
 
     @Validate(IsValidMongooseId, ["lead-source", "can-null"])
-    @Field(() => String, {nullable: true})
-    dealer_id: string
+    @Field(() => String, { nullable: true })
+    dealer: string
 
 }

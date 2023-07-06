@@ -4,19 +4,19 @@ import { IsNotEmpty, Validate } from 'class-validator';
 import { IsValidName } from 'src/common/validation-rule-decorators/name.decorator';
 import { IsValidEnum } from 'src/common/validation-rule-decorators/validEnum.decorator';
 
-import { Status } from 'src/status.enums';
+import { EntityStatus } from 'src/common/enums/entity-status.enums';
 
 @InputType()
 export class CreateBodyTypeDto {
-  
-  @Validate(IsValidName, ["Body Type"])
+
+  @Validate(IsValidName, ['Body Type'])
   @Field(() => String)
   name: string;
 
-  @Validate(IsValidEnum, ["Body Type"])
-  @Field(() => Status, {nullable: true})
-  status: Status;
+  @Validate(IsValidEnum, ['Body Type'])
+  @Field(() => EntityStatus, { nullable: true })
+  status: EntityStatus;
 
-  @Field(() => Date, {nullable: true})
+  @Field(() => Date, { nullable: true })
   deleted_at: Date;
 }

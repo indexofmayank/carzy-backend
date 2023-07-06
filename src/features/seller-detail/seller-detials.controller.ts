@@ -7,22 +7,22 @@ import {
   Post,
   Delete,
   Put,
-} from '@nestjs/common';
+} from "@nestjs/common";
 import {
   SellerDetail,
   SellerDetailSchema,
-} from './schemas/seller-detial.schema';
-import { SellerDetailService } from './services/seller-detail.service';
-import { CreateSellerDetailDto } from './dtos/seller-detail.create.dto';
-import { UpdateSellerDetailDto } from './dtos/seller-detail.update.dto';
+} from "./schemas/seller-detial.schema";
+import { SellerDetailService } from "./services/seller-detail.service";
+import { CreateSellerDetailDto } from "./dtos/seller-detail.create.dto";
+import { UpdateSellerDetailDto } from "./dtos/seller-detail.update.dto";
 
-@Controller('seller-details')
+@Controller("seller-details")
 export class SellerDetailsController {
-  constructor(public readonly sellerDetailService: SellerDetailService) {}
+  constructor(public readonly sellerDetailService: SellerDetailService) { }
 
-  @Get(':sellerId')
+  @Get(":sellerId")
   async getSellerById(
-    @Param('sellerId') sellerId: string,
+    @Param("sellerId") sellerId: string,
   ): Promise<SellerDetail> {
     return this.sellerDetailService.getSellerById(sellerId);
   }
@@ -48,9 +48,9 @@ export class SellerDetailsController {
     );
   }
 
-  @Put(':sellerId')
+  @Put(":sellerId")
   async updateSeller(
-    @Param('sellerId') sellerId: string,
+    @Param("sellerId") sellerId: string,
     @Body() updateSellerDto: UpdateSellerDetailDto,
   ): Promise<SellerDetail> {
     return this.sellerDetailService.updateSellerDetail(
@@ -59,16 +59,16 @@ export class SellerDetailsController {
     );
   }
 
-  @Delete(':sellerId')
+  @Delete(":sellerId")
   async deleteSingleSeller(
-    @Param('sellerId') sellerId: string,
+    @Param("sellerId") sellerId: string,
   ): Promise<SellerDetail> {
     return this.sellerDetailService.deleteSingleSeller(sellerId);
   }
 
   @Delete()
   async deleteManySeller(
-    @Param('sellerIds') sellerIds: [string],
+    @Param("sellerIds") sellerIds: [string],
   ): Promise<boolean> {
     return this.sellerDetailService.deleteManySeller(sellerIds);
   }

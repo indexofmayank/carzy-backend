@@ -1,11 +1,11 @@
-import { CallTypesRepository } from '../repositories/call-types.repository';
-import { CallType } from '../schemas/call-types.schema';
-import { Injectable } from '@nestjs/common';
-import { CallTypeUpdateDto } from '../dtos/call-types.update.dto';
+import { CallTypesRepository } from "../repositories/call-types.repository";
+import { CallType } from "../schemas/call-types.schema";
+import { Injectable } from "@nestjs/common";
+import { CallTypeUpdateDto } from "../dtos/call-types.update.dto";
 
 @Injectable()
 export class CallTypeService {
-  constructor(private readonly callTypeRepository: CallTypesRepository) {}
+  constructor(private readonly callTypeRepository: CallTypesRepository) { }
 
   async getCallTypeById(callTypeObjectId): Promise<CallType | any> {
     return this.callTypeRepository.findById(callTypeObjectId);
@@ -15,10 +15,10 @@ export class CallTypeService {
     return this.callTypeRepository.find({}, resPerPage, pageNo);
   }
 
-  async createCallType(name: string, dealer_id: string): Promise<CallType> {
+  async createCallType(name: string, dealer: string): Promise<CallType> {
     return this.callTypeRepository.create({
       name,
-      dealer_id,
+      dealer,
     });
   }
 

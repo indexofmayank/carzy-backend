@@ -8,7 +8,7 @@ import { BuyerInputDto } from './dtos/buyer.input.dto';
 
 @Resolver()
 export class BuyersResolver {
-  constructor(private readonly buyerService: BuyersService) {}
+  constructor(private readonly buyerService: BuyersService) { }
 
   @Query(() => BuyerOutputDto, { name: 'getBuyerDetail', nullable: true })
   getBuyerDetail(
@@ -32,7 +32,7 @@ export class BuyersResolver {
       addBuyerDto.referral,
       addBuyerDto.email,
       addBuyerDto.status,
-      addBuyerDto.dealer_id,
+      addBuyerDto.dealer,
       addBuyerDto.dob,
       addBuyerDto.doa,
       addBuyerDto.spouse_details,

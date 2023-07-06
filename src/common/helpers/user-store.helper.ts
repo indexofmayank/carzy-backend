@@ -1,7 +1,7 @@
-import { AsyncLocalStorage } from 'async_hooks';
-import { Dealer } from 'src/features/dealers/Schemas/dealer.schema';
-import { Store } from 'src/shared-modules/als-store/store.entity';
-import { UserStore } from 'src/shared-modules/als-store/user-store.entity';
+import { AsyncLocalStorage } from "async_hooks";
+import { Dealer } from "src/features/dealers/Schemas/dealer.schema";
+import { Store } from "src/shared-modules/als-store/store.entity";
+import { UserStore } from "src/shared-modules/als-store/user-store.entity";
 
 export class UserStoreHelper {
 
@@ -14,11 +14,11 @@ export class UserStoreHelper {
     }
 
     public static getDealer(als: AsyncLocalStorage<Store>): Dealer {
-        return UserStoreHelper.getUserStore(als).dealer_id;
+        return UserStoreHelper.getUserStore(als).dealer;
     }
 
-    public static getDealerId(als: AsyncLocalStorage<Store>): Dealer {
-        return UserStoreHelper.getDealer(als)['_id'];
+    public static getDealerId(als: AsyncLocalStorage<Store>): string {
+        return UserStoreHelper.getDealer(als)["_id"];
     }
 
 }

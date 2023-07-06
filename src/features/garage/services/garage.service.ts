@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { Garage } from '../schemas/garage.schema';
-import { GarageRepository } from '../repositories/garage.repository';
-import { GarageIdDto } from '../inputs/garage.Id.dto';
-import { CreateGarageDto } from '../inputs/create.garage.dto';
-import { UpdateGarageDto } from '../inputs/update.garage.dto';
-import { UpdateGarageStatusDto } from '../inputs/update.garage.status.dto';
+import { Injectable } from "@nestjs/common";
+import { Garage } from "../schemas/garage.schema";
+import { GarageRepository } from "../repositories/garage.repository";
+import { GarageIdDto } from "../inputs/garage.Id.dto";
+import { CreateGarageDto } from "../inputs/create.garage.dto";
+import { UpdateGarageDto } from "../inputs/update.garage.dto";
+import { UpdateGarageStatusDto } from "../inputs/update.garage.status.dto";
 
 @Injectable()
 export class GarageService {

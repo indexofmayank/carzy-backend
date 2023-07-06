@@ -1,17 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { BodyType } from '../schemas/body-types.schema';
 import { BodyTypeRepository } from '../repositories/body-types.repository';
-import mongoose, { FilterQuery, Mongoose } from 'mongoose';
 import { UpdateBodyTypeDto } from '../inputs/update.body-type.dto';
 import { CreateBodyTypeDto } from '../inputs/create.body-type.dto';
 import { UpdateBodyTypeStatusDto } from '../inputs/update.body-type.status.dto';
-import { Status } from 'src/status.enums';
 import { BodyTypeIdDto } from '../inputs/body-type.id.dto';
-import { UpdateBrandStatusDto } from 'src/features/brand/inputs/update.brand.status.dto';
 
 @Injectable()
 export class BodyTypeService {
-  constructor(private readonly bodyTypeRepository: BodyTypeRepository) {}
+  constructor(private readonly bodyTypeRepository: BodyTypeRepository) { }
 
   async getBodyTypeById(bodyTypeIdDto: BodyTypeIdDto): Promise<BodyType | any> {
     return this.bodyTypeRepository.findById(bodyTypeIdDto.bodyTypeId);
@@ -28,12 +25,14 @@ export class BodyTypeService {
   }
 
   async updateBodyType(
-   updateBodyTypeDto: UpdateBodyTypeDto
+    updateBodyTypeDto: UpdateBodyTypeDto
   ): Promise<BodyType> {
     return this.bodyTypeRepository.findOneAndUpdate(
       { _id: updateBodyTypeDto.bodyTypeId },
-      {name: updateBodyTypeDto.name,
-        status: updateBodyTypeDto.status},
+      {
+        name: updateBodyTypeDto.name,
+        status: updateBodyTypeDto.status
+      },
     );
   }
 
@@ -41,19 +40,19 @@ export class BodyTypeService {
     updateBodyTypeStatusDto: UpdateBodyTypeStatusDto
   ): Promise<BodyType> {
     return this.bodyTypeRepository.findOneAndUpdate(
-      {_id: updateBodyTypeStatusDto.bodyTypeId },
-     {name: updateBodyTypeStatusDto.status},
+      { _id: updateBodyTypeStatusDto.bodyTypeId },
+      { name: updateBodyTypeStatusDto.status },
     )
   }
 
 
-  async deleteBodyType(bodyTypeIdDto: BodyTypeIdDto ): Promise<any> {
+  async deleteBodyType(bodyTypeIdDto: BodyTypeIdDto): Promise<any> {
     return this.bodyTypeRepository.findOneAndDelete({ _id: bodyTypeIdDto.bodyTypeId });
   }
 
   async deleteManyBodyType(bodyTypeIdDto: BodyTypeIdDto): Promise<boolean> {
     return this.bodyTypeRepository.findManyAndDelete({
-      _id:  bodyTypeIdDto.bodyTypeId
+      _id: bodyTypeIdDto.bodyTypeId
     });
   }
 }

@@ -15,7 +15,7 @@ import { UpdateBuyerDto } from './dtos/update.buyer.dto';
 
 @Controller('buyers')
 export class BuyersController {
-  constructor(public readonly buyerService: BuyersService) {}
+  constructor(public readonly buyerService: BuyersService) { }
 
   @Get(':buyerId')
   async getBuyerById(@Param('buyerId') buyerId: string): Promise<Buyer> {
@@ -36,7 +36,7 @@ export class BuyersController {
       createBuyerDto.referral,
       createBuyerDto.email,
       createBuyerDto.status,
-      createBuyerDto.dealer_id,
+      createBuyerDto.dealer,
       createBuyerDto.dob,
       createBuyerDto.doa,
       createBuyerDto.spouse_details,

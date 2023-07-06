@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CarVariantRepository } from '../repositories/car-variant.repository';
-import { CarVariant } from '../schemas/car-variant.schema';
-import { UpdateCarVariantDto } from '../inputs/update.car-variant.dto';
-import { CarVariantIdDto } from '../inputs/car-variant.id.dto';
-import { CreateCarVariantDto } from '../inputs/create.car-variant.dto';
-import { UpdateCarVariantStatusDto } from '../inputs/update.car-variant.status.dto';
+import { Injectable } from "@nestjs/common";
+import { CarVariantRepository } from "../repositories/car-variant.repository";
+import { CarVariant } from "../schemas/car-variant.schema";
+import { UpdateCarVariantDto } from "../inputs/update.car-variant.dto";
+import { CarVariantIdDto } from "../inputs/car-variant.id.dto";
+import { CreateCarVariantDto } from "../inputs/create.car-variant.dto";
+import { UpdateCarVariantStatusDto } from "../inputs/update.car-variant.status.dto";
 
 @Injectable()
 export class CarVariantService {

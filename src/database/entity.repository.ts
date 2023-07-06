@@ -2,9 +2,9 @@ import {
   Document,
   FilterQuery,
   Model,
-  QueryOptions,
   UpdateQuery,
-} from 'mongoose';
+} from "mongoose";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
 
 export abstract class EntityRepository<T extends Document> {
   constructor(public readonly entityModel: Model<T>) { }
@@ -21,6 +21,13 @@ export abstract class EntityRepository<T extends Document> {
       })
       .exec();
   }
+  async findActiveOne(
+    entityFilterQuery: FilterQuery<T>,
+    projection?: Record<string, unknown>,
+  ): Promise<T | null> {
+    entityFilterQuery.$and["status"] = EntityStatus.ACTIVE;
+    return this.findOne(entityFilterQuery, projection);
+  }
 
   async find(
     entityFilterQuery: FilterQuery<T>,
@@ -34,13 +41,17 @@ export abstract class EntityRepository<T extends Document> {
       .skip(skip);
   }
 
-  async findById(entityObjectId): Promise<T[] | null> {
+  async findById(entityObjectId): Promise<T | null> {
     return this.entityModel.findById(entityObjectId);
   }
 
-  async create(createEntityData: unknown): Promise<T> {
+  async findByIds(entityObjectIds): Promise<T[] | null> {
+    return this.entityModel.find({ $in: { _id: entityObjectIds } });
+  }
+
+  async create(createEntityData: unknown, options?: object): Promise<T> {
     const entity = new this.entityModel(createEntityData);
-    return entity.save();
+    return entity.save(options);
   }
 
   async findOneAndUpdate(
@@ -53,6 +64,15 @@ export abstract class EntityRepository<T extends Document> {
       {
         new: true,
       },
+    );
+  }
+
+  async updateById(
+    id: string,
+    updateEntityData: UpdateQuery<unknown>,
+  ): Promise<T | null> {
+    return this.entityModel.findByIdAndUpdate(
+      id, updateEntityData, { new: true, },
     );
   }
 

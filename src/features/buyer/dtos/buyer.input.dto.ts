@@ -91,7 +91,7 @@ export class BuyerInputDto {
 
   @IsNotEmpty()
   @Field()
-  dealer_id: string;
+  dealer: string;
 
   @IsNotEmpty()
   @Field()

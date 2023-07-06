@@ -73,7 +73,7 @@ export class BuyerOutputDto {
   status: string;
 
   @Field()
-  dealer_id: string;
+  dealer: string;
 
   @Field()
   dob: string;

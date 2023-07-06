@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { FuelTypeRepository } from '../repositories/fuel-type.repository';
-import { FuelType } from '../schemas/fuel-type.schema';
-import { CreateFuelTypeDto } from '../inputs/create.fuel-type.dto';
-import {UpdateFuelTypeDto} from '../inputs/update.fuel-type.dto';
-import { FuelTypeIdDto } from '../inputs/fuel-type.id.dto';
-import { UpdateFuelTypeStatusDto } from '../inputs/update.fuel-type.status.dto';
+import { Injectable } from "@nestjs/common";
+import { FuelTypeRepository } from "../repositories/fuel-type.repository";
+import { FuelType } from "../schemas/fuel-type.schema";
+import { CreateFuelTypeDto } from "../inputs/create.fuel-type.dto";
+import {UpdateFuelTypeDto} from "../inputs/update.fuel-type.dto";
+import { FuelTypeIdDto } from "../inputs/fuel-type.id.dto";
+import { UpdateFuelTypeStatusDto } from "../inputs/update.fuel-type.status.dto";
 
 @Injectable()
 export class FuelTypeService {

@@ -7,19 +7,19 @@ import {
   Post,
   Delete,
   Put,
-} from '@nestjs/common';
-import { CallType } from './schemas/call-types.schema';
-import { CallTypeService } from './services/call-types.service';
-import { CallTypeCreateDto } from './dtos/call-types.create.dto';
-import { CallTypeUpdateDto } from './dtos/call-types.update.dto';
+} from "@nestjs/common";
+import { CallType } from "./schemas/call-types.schema";
+import { CallTypeService } from "./services/call-types.service";
+import { CallTypeCreateDto } from "./dtos/call-types.create.dto";
+import { CallTypeUpdateDto } from "./dtos/call-types.update.dto";
 
-@Controller('call-types')
+@Controller("call-types")
 export class CallTypesController {
-  constructor(public readonly callTypeService: CallTypeService) {}
+  constructor(public readonly callTypeService: CallTypeService) { }
 
-  @Get(':callTypeId')
+  @Get(":callTypeId")
   async getCallTypeById(
-    @Param('callTypeId') callTypeId: string,
+    @Param("callTypeId") callTypeId: string,
   ): Promise<CallType | any> {
     return this.callTypeService.getCallTypeById(callTypeId);
   }
@@ -35,19 +35,19 @@ export class CallTypesController {
   ): Promise<CallType> {
     return this.callTypeService.createCallType(
       callTypeCreateDto.name,
-      callTypeCreateDto.dealer_id,
+      callTypeCreateDto.dealer,
     );
   }
 
-  @Put(':callTypeId')
+  @Put(":callTypeId")
   async updateCallType(
-    @Param('callTypeId') callTypeId: string,
+    @Param("callTypeId") callTypeId: string,
     @Body() callTypeUpdateDto: CallTypeUpdateDto,
   ): Promise<CallType> {
     return this.callTypeService.updateCallType(callTypeId, callTypeUpdateDto);
   }
 
-  @Delete(':callTypeId')
+  @Delete(":callTypeId")
   async deleteCallType(callTypeId: string): Promise<CallType | any> {
     return this.callTypeService.deleteCallType(callTypeId);
   }

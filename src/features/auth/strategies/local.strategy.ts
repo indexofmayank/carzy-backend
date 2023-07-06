@@ -1,18 +1,18 @@
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-local';
-import { AuthService } from '../auth.service';
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { PassportStrategy } from "@nestjs/passport";
+import { Strategy } from "passport-local";
+import { AuthService } from "../auth.service";
+import { Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService, private readonly jwtService: JwtService) {
-    super({ usernameField: 'username' });
+    super({ usernameField: "email" });
   }
 
   async validate(email: string, password: string) {
     const employeeData = await this.authService.authenticate({
-      username: email,
+      email: email,
       password,
     });
     if (employeeData) {

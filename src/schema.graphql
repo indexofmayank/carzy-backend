@@ -4,11 +4,11 @@
 
 type Brand {
   name: String
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
-enum Status {
+enum EntityStatus {
   ACTIVE
   INACTIVE
   DELETED
@@ -21,7 +21,7 @@ scalar DateTime
 
 type BodyType {
   name: String
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
@@ -29,31 +29,31 @@ type CarModel {
   name: String
   body_type_id: String
   brand_id: String
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
 type Color {
   name: String
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
 type FuelType {
   name: String!
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
 type MakeYear {
   year: Int!
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
 type CarVariant {
   name: String
-  status: Status
+  status: EntityStatus
   model_id: String
   deleted_at: DateTime
 }
@@ -61,7 +61,7 @@ type CarVariant {
 type Garage {
   name: String!
   model_id: String
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
@@ -83,7 +83,6 @@ type Dealer {
   status: String!
   email: String!
   phone: String!
-  deleted_at: DateTime!
 }
 
 type DealerHasEmployee {
@@ -93,9 +92,7 @@ type DealerHasEmployee {
   status: String!
   phone: Float!
   email: String!
-  dealer_id: Dealer!
-  password: String!
-  deleted_at: DateTime!
+  dealer: Dealer!
 }
 
 type AddressOutputDto {
@@ -121,7 +118,7 @@ type BuyerOutputDto {
   referral: String!
   email: String!
   status: String!
-  dealer_id: String!
+  dealer: String!
   dob: String!
   doa: String!
   spouse_details: SpouseDetailOutputDto!
@@ -130,7 +127,7 @@ type BuyerOutputDto {
 type CallType {
   name: String!
   status: String!
-  dealer_id: String!
+  dealer: String!
   deleted_at: DateTime!
 }
 
@@ -147,12 +144,12 @@ type BuyerHasPurchaseDetail {
 }
 
 type TeleCallingEntry {
-  buyer_id: String!
-  visited_next_date: String!
-  next_visit_date: String!
-  finance_required: Boolean!
+  buyer_id: String
+  visited_next_date: DateTime
+  next_visit_date: DateTime
+  finance_required: Boolean
   remarks: String!
-  next_call_date: String!
+  next_call_date: DateTime!
   created_by: String!
   specail_instruction: String!
   deleted_at: DateTime!
@@ -160,14 +157,14 @@ type TeleCallingEntry {
 
 type LeadSource {
   name: String
-  status: Status
-  dealer_id: String
+  status: EntityStatus
+  dealer: String
 }
 
 type LeadTypes {
   name: String!
-  status: Status
-  dealer_id: String
+  status: EntityStatus
+  dealer: String
   deleted_at: DateTime
 }
 
@@ -290,11 +287,11 @@ type Mutation {
   updateSeller(updateSellerDto: UpdateSellerDetailDto!, sellerId: ID!): SellerDetail!
   deleteSeller(SellerID: ID!): [SellerDetail!]!
   deleteManySeller(SellerID: [ID!]!): [SellerDetail!]!
-  addDealer(createDealerDto: DealerCreateDto!): Dealer
-  updateDealer(updateDealerId: DealerUpdateDto!, dealerId: ID!): Dealer
+  createDealer(createDealerInput: CreateDealerInput!): Dealer!
+  updateDealer(updateDealer: UpdateDealerInput!): Dealer!
   deleteDealer(dealerId: String): Dealer
   deleteManyDealer(dealerIds: [ID!]!): Dealer
-  addDealerHasEmployee(addDealerHasEmployeeDto: CreateEmployeeInput!): DealerHasEmployee
+  createEmployee(createEmployeeInput: CreateEmployeeInput!): DealerHasEmployee!
   updateDealerHasEmployee(employeeId: ID!, updateDealerHasEmployeeDto: UpdateEmployeeInput!): DealerHasEmployee
   deleteDealerHasEmployee(employeeId: String): DealerHasEmployee
   deleteManyDealerHasEmployee(employeeIds: [ID!]!): DealerHasEmployee
@@ -327,57 +324,57 @@ type Mutation {
 
 input CreateBrandDto {
   name: String
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
 input UpdateBrandDto {
   name: String
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
   brandId: [String!]
 }
 
 input UpdateBrandStatusDto {
-  status: Status!
+  status: EntityStatus!
   brandId: [String!]!
 }
 
 input CreateBodyTypeDto {
   name: String!
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
 }
 
 input UpdateBodyTypeDto {
   name: String!
-  status: Status
+  status: EntityStatus
   deleted_at: DateTime
   bodyTypeId: String!
 }
 
 input UpdateBodyTypeStatusDto {
-  status: Status!
+  status: EntityStatus!
   bodyTypeId: ID!
 }
 
 input CreateCarModelDto {
   name: String
-  status: Status
+  status: EntityStatus
   body_type_id: String
   brand_id: String
 }
 
 input UpdateCarModelDto {
   name: String
-  status: Status
+  status: EntityStatus
   body_type_id: String
   brand_id: String
   carModelId: String!
 }
 
 input UpdateCarModelStatusDto {
-  status: Status!
+  status: EntityStatus!
   carModelId: [String!]!
 }
 
@@ -387,33 +384,33 @@ input CarModelIdDto {
 
 input CreateColorDto {
   name: String
-  status: Status
+  status: EntityStatus
 }
 
 input UpdateColorDto {
   name: String
-  status: Status
+  status: EntityStatus
   colorId: [String!]!
 }
 
 input UpdateColorStatusDto {
-  status: Status!
+  status: EntityStatus!
   colorId: [String!]!
 }
 
 input CreateFuelTypeDto {
   name: String
-  status: Status
+  status: EntityStatus
 }
 
 input UpdateFuelTypeDto {
   name: String
-  status: Status
+  status: EntityStatus
   fuelTypeId: [String!]!
 }
 
 input UpdateFuelTypeStatusDto {
-  status: Status!
+  status: EntityStatus!
   fuelTypeId: [String!]!
 }
 
@@ -423,7 +420,7 @@ input CreateMakeYearDto {
 }
 
 input UpdateMakeyearStatusDto {
-  status: Status!
+  status: EntityStatus!
   makeYearId: [String!]!
 }
 
@@ -435,37 +432,37 @@ input UpdateMakeYearDto {
 
 input CreateCarVariantDto {
   name: String
-  status: Status
+  status: EntityStatus
   model_id: String
 }
 
 input UpdateCarVariantDto {
   name: String
-  status: Status
+  status: EntityStatus
   model_id: String
   carVariantId: String!
 }
 
 input UpdateCarVariantStatusDto {
-  status: Status!
+  status: EntityStatus!
   carVariantId: [String!]!
 }
 
 input CreateGarageDto {
   name: String!
   model_id: [String!]!
-  status: Status
+  status: EntityStatus
 }
 
 input UpdateGarageDto {
   name: String!
   model_id: [String!]!
-  status: Status
+  status: EntityStatus
   garageId: [String!]!
 }
 
 input UpdateGarageStatusDto {
-  status: Status!
+  status: EntityStatus!
   garageId: [String!]!
 }
 
@@ -491,20 +488,23 @@ input UpdateSellerDetailDto {
   dob: String!
 }
 
-input DealerCreateDto {
+input CreateDealerInput {
   name: String!
   address: String!
-  status: String!
+  password: String!
+  confirm_password: String!
   email: String!
   phone: String!
 }
 
-input DealerUpdateDto {
+input UpdateDealerInput {
   name: String!
   address: String!
-  status: String!
+  password: String!
+  confirm_password: String!
   email: String!
   phone: String!
+  id: String!
 }
 
 input CreateEmployeeInput {
@@ -530,7 +530,7 @@ input BuyerInputDto {
   referral: String!
   email: String!
   status: String!
-  dealer_id: String!
+  dealer: String!
   dob: String!
   doa: String!
   spouse_details: SpouseDetailInputDto!
@@ -555,7 +555,7 @@ input SpouseDetailInputDto {
 input CallTypeCreateDto {
   name: String!
   status: String!
-  dealer_id: String!
+  dealer: String!
 }
 
 input BuyerHasPurchaseDetailCreate {
@@ -606,36 +606,36 @@ input TeleCallingEntryUpdate {
 
 input CreateLeadSourceDto {
   name: String!
-  status: Status
-  dealer_id: [String!]
+  status: EntityStatus
+  dealer: [String!]
 }
 
 input UpdateLeadSourceDto {
   name: String!
-  status: Status
-  dealer_id: [String!]
+  status: EntityStatus
+  dealer: [String!]
   leadSourceId: [String!]!
 }
 
 input UpdateLeadSourceStatusDto {
-  status: Status!
+  status: EntityStatus!
   leadSourceId: [String!]!
 }
 
 input CreateLeadTypeDto {
   name: String!
-  status: Status
-  dealer_id: String
+  status: EntityStatus
+  dealer: String
 }
 
 input UpdateLeadTypeDto {
   name: String!
-  status: Status
-  dealer_id: String
+  status: EntityStatus
+  dealer: String
   leadTypeId: [String!]!
 }
 
 input UpdateLeadTypeStatusDto {
   leadTypeId: [String!]!
-  status: Status!
+  status: EntityStatus!
 }

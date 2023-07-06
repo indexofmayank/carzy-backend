@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Status } from 'src/status.enums';
+import { EntityStatus } from 'src/common/enums/entity-status.enums';
 
 export type BrandSchema = Brand & Document;
 
@@ -12,9 +12,9 @@ export class Brand {
   @Prop()
   name: string;
 
-  @Field(() => Status, {nullable: true})
-  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
-  status: Status;
+  @Field(() => EntityStatus, { nullable: true })
+  @Prop({ type: String, enum: EntityStatus, default: EntityStatus.ACTIVE })
+  status: EntityStatus;
 
   @Field(() => Date, { nullable: true })
   @Prop({ type: Date, default: 0 })

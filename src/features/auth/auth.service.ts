@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { AuthenticateDto } from './auth.dto';
-import { IAuthenticate, Role } from './auth.interface';
-import { EmployeeService } from '../dealers/employee/services/employee.service';
-import * as bcrypt from 'bcrypt';
-import { DealerHasEmployee } from '../dealers/employee/schemas/employee.schema';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { AuthenticateDto } from "./auth.dto";
+import { IAuthenticate, Role } from "./auth.interface";
+import { EmployeeService } from "../dealers/employee/services/employee.service";
+import * as bcrypt from "bcrypt";
+import { DealerHasEmployee } from "../dealers/employee/schemas/employee.schema";
 
 @Injectable()
 export class AuthService {
@@ -13,9 +13,8 @@ export class AuthService {
   ) { }
 
   async authenticate(authenticateDto: AuthenticateDto): Promise<DealerHasEmployee | null> {
-    // const authData: IAuthenticate = { token: null };
     const employee = await this.employeeService.getEmployeeByEmail(
-      authenticateDto.username,
+      authenticateDto.email,
     );
     if (employee) {
       const isPasswordValid = await bcrypt.compare(
@@ -23,7 +22,7 @@ export class AuthService {
         employee.password,
       );
       if (isPasswordValid) {
-        
+
         return employee;
       }
     }

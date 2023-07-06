@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { ObjectType, Field } from '@nestjs/graphql';
-import { Status } from 'src/status.enums';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { ObjectType, Field } from "@nestjs/graphql";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
 
 export type CallTypeSchema = CallType & Document;
 
@@ -13,12 +13,12 @@ export class CallType {
   name: string;
 
   @Field()
-  @Prop({ type: String, enum: Status, default: Status.INACTIVE })
-  status: Status;
+  @Prop({ type: String, enum: EntityStatus, default: EntityStatus.INACTIVE })
+  status: EntityStatus;
 
   @Field()
   @Prop()
-  dealer_id: string;
+  dealer: string;
 
   @Field()
   @Prop({ type: Date, default: 0 })

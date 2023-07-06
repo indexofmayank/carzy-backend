@@ -1,7 +1,7 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Status } from 'src/status.enums';
+import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
 
 export type MakeYearSchema = MakeYear & Document;
 
@@ -12,11 +12,11 @@ export class MakeYear {
   @Prop()
   year: number;
 
-  @Field(() => Status, {nullable: true})
-  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
-  status: Status;
+  @Field(() => EntityStatus, { nullable: true })
+  @Prop({ type: String, enum: EntityStatus, default: EntityStatus.ACTIVE })
+  status: EntityStatus;
 
-  @Field(() => Date, {nullable: true})
+  @Field(() => Date, { nullable: true })
   @Prop({ type: Date, default: 0 })
   deleted_at: Date;
 }

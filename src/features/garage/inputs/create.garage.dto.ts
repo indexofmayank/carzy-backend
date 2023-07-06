@@ -3,7 +3,7 @@ import { Validate } from "class-validator";
 import { IsValidMongooseId } from "src/common/validation-rule-decorators/mongoose.id.decorator";
 import { IsValidName } from "src/common/validation-rule-decorators/name.decorator";
 import { IsValidEnum } from "src/common/validation-rule-decorators/validEnum.decorator";
-import { Status } from "src/status.enums";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
 
 
 @InputType()
@@ -19,6 +19,6 @@ export class CreateGarageDto {
 
 
     @Validate(IsValidEnum, ["garage"])
-    @Field(() => Status, {nullable: true})
+    @Field(() => EntityStatus, { nullable: true })
     status: string;
 }

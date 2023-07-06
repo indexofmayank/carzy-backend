@@ -1,34 +1,35 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Prop, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { Field, ObjectType } from "@nestjs/graphql";
+import { DealerStatus } from "../dealer-status.enum";
+import { DefaultSchema } from "src/common/decorators/mongoose/default-schema.decorator";
 
 export type DealerSchema = Dealer & Document;
 
 @ObjectType()
-@Schema({ timestamps: true })
+@DefaultSchema()
 export class Dealer {
   @Field()
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
   @Field()
-  @Prop()
+  @Prop({ required: true })
   address: string;
 
   @Field()
-  @Prop()
+  @Prop({ type: String, enum: DealerStatus, default: DealerStatus.ENQUIRED })
   status: string;
 
   @Field()
-  @Prop()
+  @Prop({ required: true })
   email: string;
 
   @Field()
-  @Prop()
+  @Prop({ required: true })
   phone: string;
 
-  @Field()
-  @Prop({ type: Date, default: 0 })
+  @Prop({ type: Date, default: null })
   deleted_at: Date;
 }
 

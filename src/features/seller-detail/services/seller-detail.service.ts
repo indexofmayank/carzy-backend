@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { SellerDetailRepository } from '../repositories/seller-detail-repository';
-import { SellerDetail } from '../schemas/seller-detial.schema';
-import { UpdateSellerDetailDto } from '../dtos/seller-detail.update.dto';
+import { Injectable } from "@nestjs/common";
+import { SellerDetailRepository } from "../repositories/seller-detail-repository";
+import { SellerDetail } from "../schemas/seller-detial.schema";
+import { UpdateSellerDetailDto } from "../dtos/seller-detail.update.dto";
 
 @Injectable()
 export class SellerDetailService {

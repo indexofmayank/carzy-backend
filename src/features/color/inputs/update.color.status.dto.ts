@@ -1,6 +1,6 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { Status } from "src/status.enums";
-import {Validate} from 'class-validator';
+import { EntityStatus } from "src/common/enums/entity-status.enums";
+import { Validate } from "class-validator";
 import { IsValidEnum } from "src/common/validation-rule-decorators/validEnum.decorator";
 import { IsValidMongooseId } from "src/common/validation-rule-decorators/mongoose.id.decorator";
 
@@ -9,7 +9,7 @@ import { IsValidMongooseId } from "src/common/validation-rule-decorators/mongoos
 export class UpdateColorStatusDto {
 
     @Validate(IsValidEnum, ["Color"])
-    @Field(() => Status)
+    @Field(() => EntityStatus)
     status: string;
 
 

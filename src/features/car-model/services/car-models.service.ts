@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CarModel } from '../schemas/car-model.schema';
-import { CarModelsRepository } from '../respositories/car-models.respository';
-import { UpdateCarModelDto } from '../inputs/update.car-model.dto';
-import { CreateCarModelDto } from '../inputs/create.car-model.dto';
-import { CarModelIdDto } from '../inputs/car-model.id.dto';
-import { UpdateCarModelStatusDto } from '../inputs/update.car-model.status.dto';
+import { Injectable } from "@nestjs/common";
+import { CarModel } from "../schemas/car-model.schema";
+import { CarModelsRepository } from "../respositories/car-models.respository";
+import { UpdateCarModelDto } from "../inputs/update.car-model.dto";
+import { CreateCarModelDto } from "../inputs/create.car-model.dto";
+import { CarModelIdDto } from "../inputs/car-model.id.dto";
+import { UpdateCarModelStatusDto } from "../inputs/update.car-model.status.dto";
 
 @Injectable()
 export class CarModelService {

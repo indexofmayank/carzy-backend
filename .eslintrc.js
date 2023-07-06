@@ -22,7 +22,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     "prettier/prettier": "off",
-    "@typescript-eslint/quotes": ["error", "single", {
+    "@typescript-eslint/quotes": ["error", "double", {
       "avoidEscape": true, "allowTemplateLiterals": true
     }
     ]

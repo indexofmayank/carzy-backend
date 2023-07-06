@@ -7,21 +7,21 @@ import {
   Post,
   Delete,
   Put,
-} from '@nestjs/common';
-import { BuyerHasPurchaseDetailsService } from './services/buyer-has-purchase-detail.service';
-import { BuyerHasPurchaseDetail } from './schemas/buyer-has-purchase-details.schema';
-import { BuyerHasPurchaseDetailCreate } from './dtos/buyer-has-purchase-detail.create.dto';
-import { BuyerHasPurchaseDetailUpdate } from './dtos/buyer-has-purchase-detail.update.dto';
+} from "@nestjs/common";
+import { BuyerHasPurchaseDetailsService } from "./services/buyer-has-purchase-detail.service";
+import { BuyerHasPurchaseDetail } from "./schemas/buyer-has-purchase-details.schema";
+import { BuyerHasPurchaseDetailCreate } from "./dtos/buyer-has-purchase-detail.create.dto";
+import { BuyerHasPurchaseDetailUpdate } from "./dtos/buyer-has-purchase-detail.update.dto";
 
-@Controller('buyer-has-purchase-detail')
+@Controller("buyer-has-purchase-detail")
 export class BuyerHasPurchaseDetailsController {
   constructor(
     public readonly buyer_has_purchase_detail_service: BuyerHasPurchaseDetailsService,
   ) {}
 
-  @Get(':purchaseDetailId')
+  @Get(":purchaseDetailId")
   async getPurchaseDetailById(
-    @Param('purchaseDetailId') purchaseDetailId: string,
+    @Param("purchaseDetailId") purchaseDetailId: string,
   ): Promise<BuyerHasPurchaseDetail> {
     return this.buyer_has_purchase_detail_service.getBuyerHasPurchaseDetailById(
       purchaseDetailId,
@@ -52,9 +52,9 @@ export class BuyerHasPurchaseDetailsController {
     );
   }
 
-  @Put(':purchaseDetailId')
+  @Put(":purchaseDetailId")
   async updatePurchaseDetail(
-    @Param('purchaseDetailId') purchaseDetailId: string,
+    @Param("purchaseDetailId") purchaseDetailId: string,
     @Body() updatePurchaseDetailDto: BuyerHasPurchaseDetailUpdate,
   ): Promise<BuyerHasPurchaseDetail | any> {
     return this.buyer_has_purchase_detail_service.updateBuyerHasPurchaseDetail(
@@ -63,9 +63,9 @@ export class BuyerHasPurchaseDetailsController {
     );
   }
 
-  @Delete(':purchaseDetailId')
+  @Delete(":purchaseDetailId")
   async deletePurchaseDetail(
-    @Param('purchaseDetailId') purchaseDetailId: string,
+    @Param("purchaseDetailId") purchaseDetailId: string,
   ): Promise<BuyerHasPurchaseDetail | any> {
     return this.buyer_has_purchase_detail_service.deleteBuyerHasPurchaseDetail(
       purchaseDetailId,
@@ -74,7 +74,7 @@ export class BuyerHasPurchaseDetailsController {
 
   @Delete()
   async deleteManyPurchaseDetail(
-    @Param('purchaseDetailIds') purchaseDetailIds: [string],
+    @Param("purchaseDetailIds") purchaseDetailIds: [string],
   ): Promise<boolean> {
     return this.buyer_has_purchase_detail_service.deleteManyBuyerHasPurchaseDetail(
       purchaseDetailIds,

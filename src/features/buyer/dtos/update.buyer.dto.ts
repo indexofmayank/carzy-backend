@@ -34,7 +34,7 @@ export class UpdateBuyerDto {
 
   @Field()
   @IsNotEmpty()
-  dealer_id: string;
+  dealer: string;
 
   @Field()
   @IsNotEmpty()

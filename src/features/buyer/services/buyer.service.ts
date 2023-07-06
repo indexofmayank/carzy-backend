@@ -5,7 +5,7 @@ import { BuyerRepository } from '../repositories/buyers.repository';
 
 @Injectable()
 export class BuyersService {
-  constructor(private readonly buyersRepository: BuyerRepository) {}
+  constructor(private readonly buyersRepository: BuyerRepository) { }
 
   async getBuyerById(buyerObjectId): Promise<Buyer | any> {
     return this.buyersRepository.findById(buyerObjectId);
@@ -22,7 +22,7 @@ export class BuyersService {
     referral: string,
     email: string,
     status: string,
-    dealer_id: string,
+    dealer: string,
     dob: string,
     doa: string,
     spouse_details: any,
@@ -34,7 +34,7 @@ export class BuyersService {
       referral,
       email,
       status,
-      dealer_id,
+      dealer,
       dob,
       doa,
       spouse_details,

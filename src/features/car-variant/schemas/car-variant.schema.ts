@@ -1,27 +1,27 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { CarModel } from '../../car-model/schemas/car-model.schema';
-import { Status } from 'src/status.enums';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose, { Document } from "mongoose";
+import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { CarModel } from "../../car-model/schemas/car-model.schema";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
 
 export type CarVariantSchema = CarVariant & Document;
 
 @ObjectType()
 @Schema({ timestamps: true })
 export class CarVariant {
-  @Field(() => String, {nullable: true})
+  @Field(() => String, { nullable: true })
   @Prop()
   name: string;
 
-  @Field(() => Status, {nullable: true})
-  @Prop({ type: String, enum: Status, default: Status.ACTIVE })
-  status: Status;
+  @Field(() => EntityStatus, { nullable: true })
+  @Prop({ type: String, enum: EntityStatus, default: EntityStatus.ACTIVE })
+  status: EntityStatus;
 
-  @Field(() => String, {nullable: true})
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'CarModel' })
+  @Field(() => String, { nullable: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "CarModel" })
   model_id: CarModel[];
 
-  @Field(() => Date, {nullable: true})
+  @Field(() => Date, { nullable: true })
   @Prop({ type: Date, default: 0 })
   deleted_at: Date;
 }

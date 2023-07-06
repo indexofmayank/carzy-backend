@@ -34,7 +34,7 @@ export class CreateBuyerDto {
   status: string;
 
   @IsNotEmpty()
-  dealer_id: string;
+  dealer: string;
 
   @IsNotEmpty()
   dob: string;

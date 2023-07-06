@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { BuyerHasPurchaseDetailsRepository } from '../repositories/buyer-has-purchase-detail.repository';
-import { BuyerHasPurchaseDetailUpdate } from '../dtos/buyer-has-purchase-detail.update.dto';
-import { BuyerHasPurchaseDetail } from '../schemas/buyer-has-purchase-details.schema';
+import { Injectable } from "@nestjs/common";
+import { BuyerHasPurchaseDetailsRepository } from "../repositories/buyer-has-purchase-detail.repository";
+import { BuyerHasPurchaseDetailUpdate } from "../dtos/buyer-has-purchase-detail.update.dto";
+import { BuyerHasPurchaseDetail } from "../schemas/buyer-has-purchase-details.schema";
 
 @Injectable()
 export class BuyerHasPurchaseDetailsService {

@@ -38,7 +38,7 @@ export class Buyer {
 
   @Field()
   @Prop()
-  dealer_id: string;
+  dealer: string;
 
   @Field()
   @Prop()

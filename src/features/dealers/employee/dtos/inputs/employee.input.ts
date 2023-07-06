@@ -4,6 +4,7 @@ import { IsNumberString } from 'class-validator';
 
 @InputType()
 export class EmployeeInput {
+
   @IsAlpha()
   @Field(() => String)
   first_name: string;

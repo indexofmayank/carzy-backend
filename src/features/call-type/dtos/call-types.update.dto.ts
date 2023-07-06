@@ -1,6 +1,6 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty } from '@nestjs/class-validator';
-import { Status } from 'src/status.enums';
+import { Field, InputType } from "@nestjs/graphql";
+import { IsNotEmpty } from "@nestjs/class-validator";
+import { EntityStatus } from "src/common/enums/entity-status.enums";
 @InputType()
 export class CallTypeUpdateDto {
   @Field(() => String)
@@ -11,5 +11,5 @@ export class CallTypeUpdateDto {
 
   @IsNotEmpty()
   @Field()
-  dealer_id: string;
+  dealer: string;
 }

@@ -1,13 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { EmployeeRepository } from '../repositories/employee.repository';
-import { DealerHasEmployee } from '../schemas/employee.schema';
-import { UpdateEmployeeInput } from '../dtos/inputs/update-employee.input';
-import { CreateEmployeeInput } from '../dtos/inputs/create-employee.input';
-import { Status } from 'src/status.enums';
-import * as bcrypt from 'bcrypt';
-import { AsyncLocalStorage } from 'async_hooks';
-import { Store } from 'src/shared-modules/als-store/store.entity';
-import { UserStoreHelper } from 'src/common/helpers/user-store.helper';
+import { Injectable } from "@nestjs/common";
+import { EmployeeRepository } from "../repositories/employee.repository";
+import { DealerHasEmployee } from "../schemas/employee.schema";
+import { UpdateEmployeeInput } from "../dtos/inputs/update-employee.input";
+import { CreateEmployeeInput } from "../dtos/inputs/create-employee.input";
+import { AsyncLocalStorage } from "async_hooks";
+import { Store } from "src/shared-modules/als-store/store.entity";
+import { UserStoreHelper } from "src/common/helpers/user-store.helper";
+import { DealerStatus } from "../../dealer-status.enum";
 
 @Injectable()
 export class EmployeeService {
@@ -28,8 +27,8 @@ export class EmployeeService {
 
   async getEmployeeByEmail(email: string): Promise<DealerHasEmployee | null> {
     const employee = await this.employeeRepository.entityModel.findOne({ email }).populate({
-      path: 'dealer_id',
-      match: { status: 'active' }
+      path: "dealer",
+      match: { status: { $in: [DealerStatus.ENQUIRED, DealerStatus.ON_BOARDED] } }
     });
     return employee;
   }
@@ -37,16 +36,8 @@ export class EmployeeService {
   async createEmployee(
     createEmployeeInput: CreateEmployeeInput,
   ): Promise<DealerHasEmployee | any> {
-    const payload = {
-      first_name: createEmployeeInput.first_name,
-      last_name: createEmployeeInput.last_name,
-      status: Status.ACTIVE,
-      phone: createEmployeeInput.phone,
-      email: createEmployeeInput.email,
-      dealer_id: UserStoreHelper.getDealerId(this.als),
-      password: await bcrypt.hash(createEmployeeInput.password, 10),
-    };
-    const employee = await this.employeeRepository.create(payload);
+    const dealerId = UserStoreHelper.getDealerId(this.als);
+    const employee = await this.employeeRepository.createEmployee(dealerId, createEmployeeInput);
     return employee;
   }
 

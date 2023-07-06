@@ -8,6 +8,7 @@ import { IsString, IsStrongPassword, isString } from 'class-validator';
 // extends IntersectionType(EmployeeInput)
 @InputType()
 export class CreateEmployeeInput extends EmployeeInput {
+
   @IsEmail()
   @Field()
   email: string;
@@ -18,5 +19,5 @@ export class CreateEmployeeInput extends EmployeeInput {
 
   @Field()
   @IsString()
-  confirm_password: string;
+  confirm_password?: string;
 }

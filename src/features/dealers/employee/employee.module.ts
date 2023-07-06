@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { DealerHasEmployee, EmployeeSchema } from './schemas/employee.schema';
-import { EmployeeRepository } from './repositories/employee.repository';
-import { EmployeeService } from './services/employee.service';
-import { DealerHasEmployeeResolver } from './employee.resolver';
+import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
+import { DealerHasEmployee, EmployeeSchema } from "./schemas/employee.schema";
+import { EmployeeRepository } from "./repositories/employee.repository";
+import { EmployeeService } from "./services/employee.service";
+import { DealerHasEmployeeResolver } from "./employee.resolver";
 
 @Module({
   imports: [
@@ -13,6 +13,6 @@ import { DealerHasEmployeeResolver } from './employee.resolver';
   ],
   controllers: [],
   providers: [EmployeeRepository, EmployeeService, DealerHasEmployeeResolver],
-  exports: [EmployeeService],
+  exports: [EmployeeService,EmployeeRepository],
 })
 export class EmployeeModule { }

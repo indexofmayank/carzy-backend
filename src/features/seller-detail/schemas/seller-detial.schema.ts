@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { ObjectType, Field } from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { ObjectType, Field } from "@nestjs/graphql";
 
 export type SellerDetailSchema = SellerDetail & Document;
 

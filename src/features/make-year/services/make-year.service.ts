@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { MakeYearRepository } from '../repositories/make-year.repository';
-import { MakeYear } from '../schemas/make-year.schema';
-import { MakeYearIdDto } from '../inputs/make-year.id.dto';
-import { UpdateMakeYearDto } from '../inputs/update.make-year.dto';
-import { UpdateMakeyearStatusDto } from '../inputs/update.make-year.status.dto';
-import { CreateMakeYearDto } from '../inputs/create.make-year.dto';
+import { Injectable } from "@nestjs/common";
+import { MakeYearRepository } from "../repositories/make-year.repository";
+import { MakeYear } from "../schemas/make-year.schema";
+import { MakeYearIdDto } from "../inputs/make-year.id.dto";
+import { UpdateMakeYearDto } from "../inputs/update.make-year.dto";
+import { UpdateMakeyearStatusDto } from "../inputs/update.make-year.status.dto";
+import { CreateMakeYearDto } from "../inputs/create.make-year.dto";
 
 @Injectable()
 export class MakeYearService {

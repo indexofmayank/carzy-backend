@@ -1,6 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { IsNotEmpty, Validate } from '@nestjs/class-validator';
-import { Status } from 'src/status.enums';
+import { EntityStatus } from 'src/common/enums/entity-status.enums';
 import { IsValidName } from 'src/common/validation-rule-decorators/name.decorator';
 import { IsValidEnum } from 'src/common/validation-rule-decorators/validEnum.decorator';
 
@@ -11,8 +11,8 @@ export class CreateBrandDto {
   name: string;
 
   @Validate(IsValidEnum, ['Brand'])
-  @Field(() => Status, { nullable: true })
-  status: Status;
+  @Field(() => EntityStatus, { nullable: true })
+  status: EntityStatus;
 
   @Field(() => Date, { nullable: true })
   deleted_at: Date;

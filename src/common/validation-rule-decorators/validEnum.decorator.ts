@@ -1,27 +1,28 @@
-import { ValidatorConstraint } from '@nestjs/class-validator';
+import { ValidatorConstraint } from "@nestjs/class-validator";
 import {
   ValidationArguments,
   ValidatorConstraintInterface,
-} from 'class-validator';
-import { Status } from 'src/status.enums';
+} from "class-validator";
+import { EntityStatus } from "../enums/entity-status.enums";
 
-@ValidatorConstraint({ name: 'customEnum', async: false })
+@ValidatorConstraint({ name: "customEnum", async: false })
 export class IsValidEnum implements ValidatorConstraintInterface {
   validate(value: any, validationArguments?: ValidationArguments) {
-    if (value === Status.ACTIVE || Status.INACTIVE || Status.DELETED) {
+    if (value === EntityStatus.ACTIVE || EntityStatus.INACTIVE || EntityStatus.DELETED) {
       return true;
     } else return false;
   }
 
   defaultMessage(validationArguments?: ValidationArguments) {
+    ``
     return (
       validationArguments[0] +
-      ' can only contain ' +
-      Status.ACTIVE +
-      ' ' +
-      Status.INACTIVE +
-      ' ' +
-      Status.DELETED
+      " can only contain " +
+      EntityStatus.ACTIVE +
+      " " +
+      EntityStatus.INACTIVE +
+      " " +
+      EntityStatus.DELETED
     );
   }
 }
